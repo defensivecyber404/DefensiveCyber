@@ -1,58 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ShieldAlert, 
-  GlobeLock, 
-  Braces, 
-  CloudRain, 
-  Network, 
-  MessageSquareWarning, 
-  GraduationCap, 
-  FileCheck2 
-} from 'lucide-react';
-
-const services = [
-  {
-    title: 'Vulnerability Assessment & Penetration Testing (VAPT)',
-    description: 'Comprehensive testing to identify and exploit security vulnerabilities in your systems before attackers do.',
-    icon: ShieldAlert,
-  },
-  {
-    title: 'Web Application Security Testing',
-    description: 'Deep-dive security analysis of your web applications to uncover OWASP Top 10 vulnerabilities.',
-    icon: GlobeLock,
-  },
-  {
-    title: 'API Security Assessment',
-    description: 'Securing your data exchange points by identifying authentication flaws and injection vulnerabilities.',
-    icon: Braces,
-  },
-  {
-    title: 'Cloud Security Review',
-    description: 'Auditing AWS, Azure, and GCP environments for misconfigurations and compliance violations.',
-    icon: CloudRain,
-  },
-  {
-    title: 'Network Security Assessment',
-    description: 'Internal and external network penetration testing to secure your infrastructure perimeter.',
-    icon: Network,
-  },
-  {
-    title: 'Security Consultation',
-    description: 'Expert guidance on designing secure architectures and implementing best security practices.',
-    icon: MessageSquareWarning,
-  },
-  {
-    title: 'Security Awareness Training',
-    description: 'Empowering your workforce to recognize and defend against phishing and social engineering attacks.',
-    icon: GraduationCap,
-  },
-  {
-    title: 'Compliance & Risk Assessment',
-    description: 'Ensuring your organization meets regulatory requirements like SOC2, HIPAA, and GDPR.',
-    icon: FileCheck2,
-  },
-];
+import { servicesData } from '../../data/services';
+import { Link } from 'react-router-dom';
 
 const ServiceCard = ({ service, index }) => {
   const cardRef = useRef(null);
@@ -88,15 +37,15 @@ const ServiceCard = ({ service, index }) => {
           }}
         />
         
-        {/* Inner Card */}
-        <div className="relative h-full bg-background-darker/90 backdrop-blur-xl p-8 rounded-2xl flex flex-col items-start gap-4">
-          <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors border border-primary/20">
-            <service.icon className="w-8 h-8 text-primary group-hover:text-glow" />
+        {/* Inner Card - Liquid Glass Translucent Effect (Apple Style) */}
+        <div className="relative h-full bg-white/5 dark:bg-black/10 backdrop-blur-2xl p-8 rounded-2xl flex flex-col items-start gap-4 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] transition-all duration-300">
+          <div className={`p-3 rounded-lg transition-colors border ${index < 2 ? 'bg-[#0F172A]/10 border-[#0F172A]/20 group-hover:bg-[#0F172A]/20' : 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'}`}>
+            <service.icon className={`w-8 h-8 group-hover:text-glow ${index < 2 ? 'text-[#0F172A]' : 'text-primary'}`} />
           </div>
-          <h3 className="text-xl font-bold font-space text-white group-hover:text-primary transition-colors">
+          <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors">
             {service.title}
           </h3>
-          <p className="text-gray-400 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             {service.description}
           </p>
         </div>
@@ -107,19 +56,30 @@ const ServiceCard = ({ service, index }) => {
 
 export const Services = () => {
   return (
-    <section id="services" className="py-24 relative z-10">
+    <section id="services" className="py-24 relative z-10 bg-transparent">
+      {/* Background Image 2 */}
+      <div 
+        className="absolute inset-0 z-[-1] opacity-100"
+        style={{
+          backgroundImage: "url('/backgroundImage2.png?v=2')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-white text-glow">
-            Core <span className="text-primary">Services</span>
+        <div className="text-center max-w-3xl mx-auto mb-16 relative z-20">
+          <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
+            Core <span className="text-[#C9A227]">Services</span>
           </h2>
-          <p className="text-gray-400">
+          <p className="text-gray-800 font-medium text-lg mb-8">
             Comprehensive cybersecurity services tailored to protect your critical assets against the most sophisticated threats.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+          {servicesData.slice(0, 4).map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>

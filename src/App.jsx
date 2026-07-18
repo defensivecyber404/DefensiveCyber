@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { AnimatedBackground } from './components/ui/AnimatedBackground';
+import { Home } from './pages/Home';
+import { BlogPage } from './pages/BlogPage';
+import { NewsPage } from './pages/NewsPage';
+import { AdminBlog } from './pages/AdminBlog';
+import { BlogPost } from './pages/BlogPost';
+import { FAQPage } from './pages/FAQPage';
+import { AboutPage } from './pages/AboutPage';
+import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
 import { CustomCursor } from './components/ui/CustomCursor';
-import { Hero } from './components/sections/Hero';
-import { Services } from './components/sections/Services';
-import { WhyUs } from './components/sections/WhyUs';
-import { Process } from './components/sections/Process';
-import { Dashboard } from './components/sections/Dashboard';
-import { Portfolio } from './components/sections/Portfolio';
-import { Testimonials } from './components/sections/Testimonials';
-import { FAQ } from './components/sections/FAQ';
-import { Contact } from './components/sections/Contact';
 
 function App() {
   // Smooth scroll behavior
@@ -23,25 +22,24 @@ function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-gray-200 font-sans selection:bg-primary/30 selection:text-white">
-      <CustomCursor />
-      <AnimatedBackground />
-      <Navbar />
-      
-      <main>
-        <Hero />
-        <Services />
-        <WhyUs />
-        <Process />
-        <Dashboard />
-        <Portfolio />
-        <Testimonials />
-        <FAQ />
-        <Contact />
-      </main>
+    <BrowserRouter>
+      <div className="relative min-h-screen text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
+        <Navbar />
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blogs" element={<BlogPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/secure-admin" element={<AdminBlog />} />
+          <Route path="/post/:id" element={<BlogPost />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/legal" element={<PrivacyTermsPage />} />
+        </Routes>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

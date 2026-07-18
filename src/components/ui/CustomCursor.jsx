@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -500, y: -500 });
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const CustomCursor = () => {
         transition={{ type: 'tween', ease: 'backOut', duration: 0.1 }}
       />
       <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border border-primary/50 rounded-full pointer-events-none z-[99]"
+        className="fixed top-0 left-0 w-12 h-12 border border-primary/50 rounded-full pointer-events-none z-[-1]"
         animate={{
           x: mousePosition.x - 24,
           y: mousePosition.y - 24,

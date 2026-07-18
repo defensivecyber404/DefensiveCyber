@@ -35,41 +35,32 @@ const Counter = ({ value, suffix }) => {
   }, [isInView, value]);
 
   return (
-    <span ref={ref} className="text-4xl md:text-5xl font-bold font-space text-white text-glow">
+    <span ref={ref} className="text-5xl md:text-6xl lg:text-7xl font-black font-sans text-[#0F172A] tracking-tighter">
       {count}
-      <span className="text-primary">{suffix}</span>
+      <span>{suffix}</span>
     </span>
   );
 };
 
 export const WhyUs = () => {
   return (
-    <section id="why-us" className="py-24 relative z-10 bg-background-darker/50">
+    <section id="why-us" className="py-16 relative z-10 bg-transparent">
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-white text-glow">
-            Why Choose <span className="text-primary">Us</span>
-          </h2>
-          <p className="text-gray-400">
-            We deliver uncompromising security with a proven track record. Our metrics speak for our dedication to your safety.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col items-center justify-center p-8 glass-panel text-center group"
+              className="flex flex-col items-center justify-center p-2 bg-transparent text-center group"
             >
-              <div className="mb-4 p-4 rounded-full bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-colors">
-                <stat.icon className="w-8 h-8 text-primary group-hover:text-glow transition-all" />
+              <div className="flex items-center gap-2 md:gap-3 lg:gap-4 mb-2">
+                <stat.icon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-[#D4AF37] drop-shadow-md" strokeWidth={2} />
+                <Counter value={stat.value} suffix={stat.suffix} />
               </div>
-              <Counter value={stat.value} suffix={stat.suffix} />
-              <p className="mt-4 text-sm text-gray-400 font-medium uppercase tracking-wider">
+              <p className="mt-1 text-sm md:text-base text-gray-800 font-medium tracking-wide">
                 {stat.label}
               </p>
             </motion.div>

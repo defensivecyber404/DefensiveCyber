@@ -32,10 +32,10 @@ export const FAQ = () => {
     <section id="faq" className="py-24 relative z-10">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-white text-glow">
+          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-[#0F172A]">
             Frequently Asked <span className="text-primary">Questions</span>
           </h2>
-          <p className="text-gray-400">
+          <p className="text-[#0F172A]/70">
             Clear answers to common questions about our security services.
           </p>
         </div>
@@ -48,19 +48,19 @@ export const FAQ = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`glass-panel rounded-xl overflow-hidden transition-colors duration-300 ${openIndex === index ? 'border-primary/50 bg-white/10' : ''}`}
+              className={`bg-white/50 backdrop-blur-md border border-[#0F172A]/10 shadow-sm rounded-xl overflow-hidden transition-colors duration-300 ${openIndex === index ? 'border-primary/50 bg-white/80' : ''}`}
             >
-              <button
-                className="w-full text-left p-6 flex justify-between items-center focus:outline-none"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              >
-                <span className={`font-space font-semibold pr-8 ${openIndex === index ? 'text-primary' : 'text-white'}`}>
-                  {faq.question}
-                </span>
-                <ChevronDown 
-                  className={`w-5 h-5 shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180 text-primary' : 'text-gray-400'}`} 
-                />
-              </button>
+                <button
+                  className="w-full text-left p-6 flex justify-between items-center focus:outline-none"
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                >
+                  <span className={`font-space font-semibold pr-8 ${openIndex === index ? 'text-primary' : 'text-[#0F172A]'}`}>
+                    {faq.question}
+                  </span>
+                  <ChevronDown 
+                    className={`w-5 h-5 shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180 text-primary' : 'text-[#0F172A]/50'}`} 
+                  />
+                </button>
               
               <AnimatePresence>
                 {openIndex === index && (
@@ -70,7 +70,7 @@ export const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="p-6 pt-0 text-gray-400 leading-relaxed border-t border-white/5">
+                    <div className="p-6 pt-0 text-[#0F172A]/80 leading-relaxed border-t border-[#0F172A]/10">
                       {faq.answer}
                     </div>
                   </motion.div>

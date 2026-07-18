@@ -35,10 +35,10 @@ export const Process = () => {
     <section id="process" className="py-24 relative z-10">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-white text-glow">
+          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-gray-900 dark:text-white text-glow">
             Our <span className="text-primary">Process</span>
           </h2>
-          <p className="text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400">
             A systematic, battle-tested approach to securing your digital perimeter.
           </p>
         </div>
@@ -61,10 +61,10 @@ export const Process = () => {
                       transition={{ duration: 0.5 }}
                       className="glass-panel p-6 rounded-2xl hover:border-primary/50 transition-colors group"
                     >
-                      <h3 className="text-xl font-bold text-white mb-2 font-space group-hover:text-primary transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 font-space group-hover:text-primary transition-colors">
                         {step.title}
                       </h3>
-                      <p className="text-gray-400 text-sm">{step.description}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{step.description}</p>
                     </motion.div>
                   )}
                 </div>
@@ -90,10 +90,10 @@ export const Process = () => {
                       transition={{ duration: 0.5 }}
                       className="glass-panel p-6 rounded-2xl hover:border-primary/50 transition-colors group"
                     >
-                      <h3 className="text-xl font-bold text-white mb-2 font-space group-hover:text-primary transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 font-space group-hover:text-primary transition-colors">
                         {step.title}
                       </h3>
-                      <p className="text-gray-400 text-sm">{step.description}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{step.description}</p>
                     </motion.div>
                   )}
                 </div>
@@ -108,10 +108,10 @@ export const Process = () => {
                       transition={{ duration: 0.5 }}
                       className="glass-panel p-6 rounded-2xl hover:border-primary/50 transition-colors group"
                     >
-                      <h3 className="text-xl font-bold text-white mb-2 font-space group-hover:text-primary transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 font-space group-hover:text-primary transition-colors">
                         {step.title}
                       </h3>
-                      <p className="text-gray-400 text-sm">{step.description}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">{step.description}</p>
                     </motion.div>
                   )}
                 </div>

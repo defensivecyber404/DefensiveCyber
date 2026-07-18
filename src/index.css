@@ -1,46 +1,322 @@
+@import url('https://fonts.cdnfonts.com/css/monument-extended');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-base: #f8fafc;
+    --text-base: #0f172a;
+  }
+
+  .dark {
+    --bg-base: #000000;
+    --text-base: #e5e7eb;
+  }
+
   body {
-    @apply bg-background-darker text-gray-200 antialiased font-sans overflow-x-hidden;
+    @apply antialiased font-sans overflow-x-hidden;
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    @apply bg-primary/30 text-white;
+    @apply bg-primary/30 text-primary-dark;
   }
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
+
   ::-webkit-scrollbar-track {
-    @apply bg-background-darker;
+    background: #050505;
   }
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/50 rounded-full hover:bg-primary transition-colors;
+    background: rgba(212, 175, 55, 0.4);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.7);
   }
 }
 
 @layer components {
+
+  /* ── Glass panel — gold-tinted depth ── */
   .glass-panel {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-[0_0_15px_rgba(199,125,255,0.1)];
+    background: linear-gradient(135deg, rgba(20, 16, 4, 0.7) 0%, rgba(5, 5, 5, 0.7) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 1rem;
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 0 20px rgba(212, 175, 55, 0.05);
   }
 
+  /* ── 3D card container ── */
+  .card-3d {
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .card-3d:hover {
+    transform: translateZ(8px) translateY(-4px) rotateX(2deg);
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(212, 175, 55, 0.15);
+  }
+
+  /* ── Cyber outline button (Light Frosted Glass) ── */
   .cyber-button {
-    @apply relative overflow-hidden bg-primary/10 text-primary border border-primary/50 hover:bg-primary/20 transition-all duration-300 font-space tracking-wider px-6 py-3 rounded-lg hover:shadow-[0_0_20px_rgba(199,125,255,0.4)] uppercase text-sm font-bold;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    box-shadow:
+      0 4px 15px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
   }
 
+  .cyber-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cyber-button:hover::before {
+    opacity: 1;
+  }
+
+  .cyber-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+  }
+
+  /* ── Highlighted CTA button (Normal, Dark Transparent) ── */
+  .cyber-button-highlight {
+    position: relative;
+    background: rgba(15, 23, 42, 0.7); /* Dark slate/blackish */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    letter-spacing: 0.15em;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+
+  .cyber-button-highlight:hover {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  @keyframes pulse-cta {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+    70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+  }
+
+  /* ── Solid gold button (Dark Obsidian Glass) ── */
   .cyber-button-solid {
-    @apply relative overflow-hidden bg-primary text-background-darker hover:bg-primary-dark transition-all duration-300 font-space tracking-wider px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(199,125,255,0.4)] hover:shadow-[0_0_25px_rgba(199,125,255,0.6)] uppercase text-sm font-bold;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.1em;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
+  .cyber-button-solid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cyber-button-solid:hover::before {
+    opacity: 1;
+  }
+
+  .cyber-button-solid:hover {
+    transform: translateY(-3px);
+    background: rgba(212, 175, 55, 0.25);
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  /* ── Gold text glow ── */
   .text-glow {
-    text-shadow: 0 0 10px rgba(199, 125, 255, 0.5), 0 0 20px rgba(199, 125, 255, 0.3);
+    text-shadow:
+      0 0 10px rgba(212, 175, 55, 0.6),
+      0 0 25px rgba(212, 175, 55, 0.3),
+      0 0 50px rgba(212, 175, 55, 0.15);
+  }
+
+  /* ── Glossy Metallic Text ── */
+  .glossy-silver {
+    background: 
+      linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%),
+      linear-gradient(to bottom, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(150, 150, 150, 0.6) 10%, 
+        rgba(0, 0, 0, 0.85) 40%, 
+        rgba(0, 0, 0, 0.95) 80%, 
+        rgba(255, 255, 255, 0.7) 100%
+      );
+    background-size: 200% auto, 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.5));
+    animation: shimmer 15s linear infinite;
+  }
+  .glossy-gold {
+    background: 
+      linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%),
+      linear-gradient(to bottom, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(212, 175, 55, 0.8) 10%, 
+        rgba(41, 18, 0, 0.85) 40%, 
+        rgba(26, 10, 0, 0.95) 80%, 
+        rgba(254, 240, 138, 0.7) 100%
+      );
+    background-size: 200% auto, 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.5));
+    animation: shimmer 15s linear infinite;
+  }
+
+  /* Light theme variations */
+  html:not(.dark) .glossy-silver {
+    background: linear-gradient(to bottom, #4b5563 0%, #1f2937 42%, #030712 50%, #1f2937 58%, #111827 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  html:not(.dark) .glossy-gold {
+    background: linear-gradient(to bottom, #fef08a 0%, #d4af37 42%, #854d0e 50%, #d4af37 58%, #a16207 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* ── Gold gradient text ── */
+  .text-gold-gradient {
+    background: linear-gradient(90deg, #d4af37 0%, #fffbe6 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+  }
+
+  /* ── Section depth divider ── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.3) 50%, transparent 100%);
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  /* ── 3D perspective wrapper ── */
+  .perspective-wrap {
+    perspective: 1000px;
+    transform-style: preserve-3d;
   }
 }
 
+/* ── Cyber grid background sizing ── */
 .bg-cyber-grid {
-  background-size: 30px 30px;
+  background-size: 32px 32px;
+}
+
+/* ── Depth floating animation ── */
+@keyframes float-depth {
+
+  0%,
+  100% {
+    transform: translateY(0) translateZ(0);
+  }
+
+  50% {
+    transform: translateY(-14px) translateZ(20px);
+  }
+}
+
+.animate-float-depth {
+  animation: float-depth 4s ease-in-out infinite;
+}
+
+/* ── Shimmer animation for gold elements ── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-gold {
+  background: linear-gradient(90deg, #aa8c2c 0%, #d4af37 30%, #fffbe6 50%, #d4af37 70%, #aa8c2c 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
 }
