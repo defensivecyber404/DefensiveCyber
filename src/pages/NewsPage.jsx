@@ -140,12 +140,12 @@ export const NewsPage = () => {
                 </div>
               )}
 
-              <div className="p-8 flex flex-col flex-grow text-left">
-                <h3 className="text-xl font-bold font-space text-gray-900 group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16">
+              <div className="p-8 flex flex-col flex-grow text-left min-w-0 w-full">
+                <h3 className="text-xl font-bold font-space text-gray-900 group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16 break-all break-words">
                   {post.title}
                 </h3>
                 
-                <p className="text-gray-800 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm break-words whitespace-pre-wrap line-clamp-3">
+                <p className="text-gray-800 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm break-all break-words whitespace-pre-wrap line-clamp-3">
                   {post.excerpt}
                 </p>
                 

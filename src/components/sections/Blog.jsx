@@ -73,12 +73,12 @@ export const Blog = () => {
                 <motion.div
                   className="group flex flex-col flex-grow rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] bg-black/60 dark:bg-black/60 backdrop-blur-2xl"
                 >
-                  <div className="p-8 flex flex-col flex-grow text-center">
-                    <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors mb-3">
+                  <div className="p-8 flex flex-col flex-grow text-center min-w-0 w-full">
+                    <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors mb-3 break-all break-words">
                       {post.title}
                     </h3>
                     
-                    <p className="text-white text-sm leading-relaxed mb-6 flex-grow break-words whitespace-pre-wrap line-clamp-3">
+                    <p className="text-white text-sm leading-relaxed mb-6 flex-grow break-all break-words whitespace-pre-wrap line-clamp-3">
                       {post.excerpt}
                     </p>
                     
