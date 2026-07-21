@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchPosts } from '../../utils/blogStore';
+import { fetchPosts, fetchExternalNews } from '../../utils/blogStore';
 import { Calendar, ArrowRight, BookOpen, Radio } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -8,11 +8,25 @@ export const Blog = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetchPosts().then(allPosts => {
-      const newsPost = allPosts.find(p => p.type === 'news');
-      const blogPost = allPosts.find(p => p.type === 'blog');
-      setPosts([newsPost, blogPost].filter(Boolean));
-    });
+    const loadHomepagePosts = async () => {
+      try {
+        const allPosts = await fetchPosts();
+        let newsPost = allPosts.find(p => p.type === 'news');
+        const blogPost = allPosts.find(p => p.type === 'blog');
+
+        // Fetch external news to feature on homepage
+        const extNews = await fetchExternalNews('cybersecurity', 1);
+        if (extNews && extNews.length > 0) {
+          newsPost = extNews[0]; // Override with external news if available
+        }
+
+        setPosts([newsPost, blogPost].filter(Boolean));
+      } catch (err) {
+        console.error('Failed to load homepage posts', err);
+      }
+    };
+    
+    loadHomepagePosts();
   }, []);
 
   return (
@@ -23,7 +37,7 @@ export const Blog = () => {
         style={{
           backgroundImage: "url('/backgroundImage3.png')",
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top center',
           backgroundRepeat: 'no-repeat',
           filter: 'brightness(1.2)'
         }}
@@ -34,7 +48,7 @@ export const Blog = () => {
             <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
               Stay Up To <span className="text-primary">Date</span>
             </h2>
-            <p className="text-[#0F172A] font-medium text-lg drop-shadow-md">
+            <p className="text-white font-medium text-lg drop-shadow-md">
               The latest insights, news, and updates from the cybersecurity frontlines.
             </p>
           </div>
@@ -43,7 +57,7 @@ export const Blog = () => {
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {posts.map((post, index) => (
             <motion.div
-              key={post.id}
+              key={post._id || post.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -64,20 +78,32 @@ export const Blog = () => {
                       {post.title}
                     </h3>
                     
-                    <p className="text-white text-sm leading-relaxed mb-6 flex-grow">
+                    <p className="text-white text-sm leading-relaxed mb-6 flex-grow break-words whitespace-pre-wrap line-clamp-3">
                       {post.excerpt}
                     </p>
                     
                     <div className="mt-auto">
-                      <Link 
-                        to={`/post/${post.id}`} 
-                        state={{ from: '/#blog' }}
-                        onClick={() => window.scrollTo(0, 0)}
-                        className="inline-flex items-center text-sm font-bold text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
-                      >
-                        Read More 
-                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </Link>
+                      {post.isExternal ? (
+                        <a 
+                          href={post.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-sm font-bold text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        >
+                          Read on Source 
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      ) : (
+                        <Link 
+                          to={`/post/${post._id || post.id}`} 
+                          state={{ from: '/#blog' }}
+                          onClick={() => window.scrollTo(0, 0)}
+                          className="inline-flex items-center text-sm font-bold text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors cursor-pointer"
+                        >
+                          Read More 
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </motion.div>

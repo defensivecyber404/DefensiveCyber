@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 export const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -143,15 +145,26 @@ export const Navbar = () => {
 
         {/* Top Right Corner (Desktop) */}
         <div className="hidden md:flex absolute right-6 md:right-12 items-center gap-6 h-full">
-          <a
-            href="/#contact"
-            className="relative px-6 py-2 rounded-full overflow-hidden group border border-gray-200 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
-          >
-            <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/15 to-transparent pointer-events-none group-hover:opacity-50 transition-opacity" />
-            <span className="relative z-10 text-sm font-bold tracking-wide text-gray-800 dark:font-medium dark:text-gray-200 group-hover:text-white transition-colors">
-              Contact Us
-            </span>
-          </a>
+          {isAuthenticated ? (
+            <button
+              onClick={() => logout()}
+              className="relative px-6 py-2 rounded-full overflow-hidden group border border-red-500/50 bg-red-500/10 backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:border-red-600 shadow-sm"
+            >
+              <span className="relative z-10 text-sm font-bold tracking-wide text-red-500 dark:text-red-400 group-hover:text-white transition-colors">
+                Admin (Logout)
+              </span>
+            </button>
+          ) : (
+            <a
+              href="/#contact"
+              className="relative px-6 py-2 rounded-full overflow-hidden group border border-gray-200 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-md transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
+            >
+              <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/15 to-transparent pointer-events-none group-hover:opacity-50 transition-opacity" />
+              <span className="relative z-10 text-sm font-bold tracking-wide text-gray-800 dark:font-medium dark:text-gray-200 group-hover:text-white transition-colors">
+                Contact Us
+              </span>
+            </a>
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -188,16 +201,30 @@ export const Navbar = () => {
                 </a>
               ))}
               <div className="flex items-center gap-6 mt-4">
-                <a
-                  href="/#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="relative px-6 py-2 rounded-full overflow-hidden group border border-gray-300/50 dark:border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 shadow-lg text-center"
-                >
-                  <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent pointer-events-none group-hover:opacity-50 transition-opacity" />
-                  <span className="relative z-10 text-sm font-medium tracking-wide text-gray-800 dark:text-gray-200 group-hover:text-white transition-colors">
-                    Contact Us
-                  </span>
-                </a>
+                {isAuthenticated ? (
+                  <button
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="relative px-6 py-2 rounded-full overflow-hidden group border border-red-500/50 bg-red-500/10 backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:border-red-600 shadow-lg text-center"
+                  >
+                    <span className="relative z-10 text-sm font-medium tracking-wide text-red-400 group-hover:text-white transition-colors">
+                      Logout Admin
+                    </span>
+                  </button>
+                ) : (
+                  <a
+                    href="/#contact"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="relative px-6 py-2 rounded-full overflow-hidden group border border-gray-300/50 dark:border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:bg-blue-600 hover:border-blue-600 shadow-lg text-center"
+                  >
+                    <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent pointer-events-none group-hover:opacity-50 transition-opacity" />
+                    <span className="relative z-10 text-sm font-medium tracking-wide text-gray-800 dark:text-gray-200 group-hover:text-white transition-colors">
+                      Contact Us
+                    </span>
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>

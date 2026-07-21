@@ -1,11 +1,12 @@
 const express = require('express');
-const db = require('../database');
+const Contact = require('../models/Contact');
 const { authenticate } = require('../middleware');
+const { sendContactEmail } = require('../utils/emailService');
 
 const router = express.Router();
 
 // Submit contact form
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { name, email, service, message } = req.body;
   
   if (!message) {
@@ -13,11 +14,10 @@ router.post('/', (req, res) => {
   }
 
   try {
-    const stmt = db.prepare(`
-      INSERT INTO contacts (name, email, service, message) 
-      VALUES (?, ?, ?, ?)
-    `);
-    stmt.run(name, email, service, message);
+    const newContact = await Contact.create({ name, email, service, message });
+    
+    // Send email notification asynchronously
+    sendContactEmail({ name, email, service, message });
     
     res.status(201).json({ success: true, message: 'Message received' });
   } catch (err) {
@@ -26,9 +26,9 @@ router.post('/', (req, res) => {
 });
 
 // Get all contact submissions (Protected)
-router.get('/', authenticate, (req, res) => {
+router.get('/', authenticate, async (req, res) => {
   try {
-    const contacts = db.prepare('SELECT * FROM contacts ORDER BY created_at DESC').all();
+    const contacts = await Contact.find().sort({ created_at: -1 });
     res.json(contacts);
   } catch (err) {
     res.status(500).json({ error: err.message });

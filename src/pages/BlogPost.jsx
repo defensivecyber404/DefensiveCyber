@@ -99,7 +99,7 @@ export const BlogPost = () => {
             <div className="prose prose-lg max-w-none text-gray-800 leading-relaxed drop-shadow-sm">
               {/* Splitting content by newlines to render paragraphs */}
               {post.content.split('\n').map((paragraph, idx) => (
-                <p key={idx} className="mb-6">{paragraph}</p>
+                <p key={idx} className="mb-6 break-words whitespace-pre-wrap">{paragraph}</p>
               ))}
             </div>
           </motion.div>

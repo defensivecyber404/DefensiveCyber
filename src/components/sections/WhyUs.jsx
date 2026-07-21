@@ -4,7 +4,7 @@ import { Target, Users, ThumbsUp, Clock } from 'lucide-react';
 
 const stats = [
   { label: 'Security Assessments', value: 100, suffix: '+', icon: Target },
-  { label: 'Clients Secured', value: 50, suffix: '+', icon: Users },
+  { label: 'Clients Secured', value: 10, suffix: '+', icon: Users },
   { label: 'Client Satisfaction', value: 99, suffix: '%', icon: ThumbsUp },
   { label: 'Security Support', value: 24, suffix: '/7', icon: Clock },
 ];

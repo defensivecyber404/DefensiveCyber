@@ -1,17 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchPosts } from '../utils/blogStore';
-import { Calendar, ArrowRight, BookOpen, Radio, ArrowLeft } from 'lucide-react';
+import { fetchPosts, deletePost } from '../utils/blogStore';
+import { ArrowRight, ArrowLeft, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { PostFormModal } from '../components/admin/PostFormModal';
 
 export const BlogPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, token } = useAuth();
   const [posts, setPosts] = useState([]);
+  
+  // Admin modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
+
+  const loadPosts = () => {
+    fetchPosts().then(data => setPosts(data.filter(p => p.type === 'blog')));
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchPosts().then(data => setPosts(data.filter(p => p.type === 'blog')));
+    loadPosts();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this blog post?')) {
+      try {
+        await deletePost(id, token);
+        loadPosts();
+      } catch (err) {
+        alert('Failed to delete post: ' + err.message);
+      }
+    }
+  };
+
+  const handleEdit = (post) => {
+    setEditingPost(post);
+    setIsModalOpen(true);
+  };
+
+  const handleAddNew = () => {
+    setEditingPost(null);
+    setIsModalOpen(true);
+  };
 
   return (
     <main className="pt-24 pb-24 relative min-h-screen text-gray-900">
@@ -43,7 +75,7 @@ export const BlogPage = () => {
           Back
         </button>
 
-        <div className="text-center max-w-3xl mx-auto mb-16 pt-4 mt-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 pt-4 mt-16">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -54,28 +86,57 @@ export const BlogPage = () => {
           </motion.h1>
         </div>
 
+        {isAuthenticated && (
+          <div className="flex justify-center mb-12">
+            <button 
+              onClick={handleAddNew}
+              className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-lg transition-all hover:-translate-y-1"
+            >
+              <PlusCircle className="w-5 h-5" />
+              Post New Blog
+            </button>
+          </div>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (
             <motion.div
-              key={post.id}
+              key={post._id || post.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group bg-transparent backdrop-blur-md flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-gray-900/20 shadow-lg"
+              className="group bg-transparent backdrop-blur-md flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-gray-900/20 shadow-lg relative"
             >
+              {isAuthenticated && (
+                <div className="absolute top-4 right-4 z-20 flex gap-2">
+                  <button 
+                    onClick={() => handleEdit(post)}
+                    className="p-2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-sm backdrop-blur-sm transition-colors"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(post._id || post.id)}
+                    className="p-2 bg-white/80 hover:bg-red-500 hover:text-white text-red-500 rounded-full shadow-sm backdrop-blur-sm transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
               <div className="p-8 flex flex-col flex-grow text-left">
-                <h3 className="text-xl font-bold font-space text-gray-900 group-hover:text-primary transition-colors mb-4 drop-shadow-sm">
+                <h3 className="text-xl font-bold font-space text-gray-900 group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16">
                   {post.title}
                 </h3>
                 
-                <p className="text-gray-800 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm">
+                <p className="text-gray-800 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm break-words whitespace-pre-wrap line-clamp-3">
                   {post.excerpt}
                 </p>
                 
                 <div className="mt-auto flex justify-between items-center w-full">
                   <Link 
-                    to={`/post/${post.id}`} 
+                    to={`/post/${post._id || post.id}`} 
                     state={{ from: '/blogs' }}
                     className="inline-flex items-center text-sm font-bold text-gray-900 hover:text-primary transition-colors cursor-pointer"
                   >
@@ -85,7 +146,7 @@ export const BlogPage = () => {
                   <span 
                     className="text-xs font-bold text-gray-600 drop-shadow-sm"
                   >
-                    {new Date(post.date).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })}
+                    {new Date(post.created_at || post.date || Date.now()).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })}
                   </span>
                 </div>
               </div>
@@ -93,6 +154,14 @@ export const BlogPage = () => {
           ))}
         </div>
       </div>
+
+      <PostFormModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialData={editingPost}
+        type="blog"
+        onSuccess={loadPosts}
+      />
     </main>
   );
 };

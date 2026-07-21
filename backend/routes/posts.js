@@ -1,13 +1,13 @@
 const express = require('express');
-const db = require('../database');
+const Post = require('../models/Post');
 const { authenticate } = require('../middleware');
 
 const router = express.Router();
 
 // Get all posts
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const posts = db.prepare('SELECT * FROM posts ORDER BY created_at DESC').all();
+    const posts = await Post.find().sort({ created_at: -1 });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -15,9 +15,9 @@ router.get('/', (req, res) => {
 });
 
 // Get a single post
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id);
+    const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ error: 'Post not found' });
     res.json(post);
   } catch (err) {
@@ -26,20 +26,14 @@ router.get('/:id', (req, res) => {
 });
 
 // Create a new post (Protected)
-router.post('/', authenticate, (req, res) => {
+router.post('/', authenticate, async (req, res) => {
   const { title, excerpt, content, type } = req.body;
   if (!title || !excerpt || !content || !type) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    const stmt = db.prepare(`
-      INSERT INTO posts (title, excerpt, content, type) 
-      VALUES (?, ?, ?, ?)
-    `);
-    const result = stmt.run(title, excerpt, content, type);
-    
-    const newPost = db.prepare('SELECT * FROM posts WHERE id = ?').get(result.lastInsertRowid);
+    const newPost = await Post.create({ title, excerpt, content, type });
     res.status(201).json(newPost);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -47,11 +41,32 @@ router.post('/', authenticate, (req, res) => {
 });
 
 // Delete a post (Protected)
-router.delete('/:id', authenticate, (req, res) => {
+router.delete('/:id', authenticate, async (req, res) => {
   try {
-    const result = db.prepare('DELETE FROM posts WHERE id = ?').run(req.params.id);
-    if (result.changes === 0) return res.status(404).json({ error: 'Post not found' });
+    const result = await Post.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ error: 'Post not found' });
     res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update a post (Protected)
+router.put('/:id', authenticate, async (req, res) => {
+  const { title, excerpt, content, type } = req.body;
+  if (!title || !excerpt || !content || !type) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      { title, excerpt, content, type },
+      { new: true } // Returns the updated document
+    );
+    
+    if (!updatedPost) return res.status(404).json({ error: 'Post not found' });
+    res.json(updatedPost);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
