@@ -10,15 +10,15 @@ const initDB = async () => {
       console.error('MONGO_URI is not defined in .env');
       process.exit(1);
     }
-    
+
     await mongoose.connect(mongoURI);
     console.log('MongoDB connected successfully');
 
     // Seed default admin if no users exist
     const userCount = await User.countDocuments();
     if (userCount === 0) {
-      const adminEmail = process.env.ADMIN_EMAIL || 'admin@defensivecyber.com';
-      const adminPass = process.env.ADMIN_PASS || 'admin123';
+      const adminEmail = process.env.ADMIN_EMAIL || 'defensivecyber404@gmail.com';
+      const adminPass = process.env.ADMIN_PASS || 'defensiveCyber@2026';
       console.log(`No users found. Creating default admin user (${adminEmail})...`);
       const hash = await bcrypt.hash(adminPass, 10);
       await User.create({ username: adminEmail, password_hash: hash });
