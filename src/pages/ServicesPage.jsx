@@ -17,6 +17,16 @@ const ServiceCard = ({ service, index }) => {
     });
   };
 
+  const handleTouchMove = (e) => {
+    if (!cardRef.current) return;
+    const touch = e.touches[0];
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: touch.clientX - rect.left,
+      y: touch.clientY - rect.top,
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -28,6 +38,7 @@ const ServiceCard = ({ service, index }) => {
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
         className="relative h-full p-[1px] rounded-2xl overflow-hidden group hover:shadow-[0_0_30px_rgba(0,245,255,0.2)] transition-shadow duration-500"
       >
         {/* Animated Gradient Border */}

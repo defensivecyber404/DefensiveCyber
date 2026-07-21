@@ -27,6 +27,14 @@ export const Logo3D = ({ size = 'md', className = '' }) => {
     mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
+  const handleTouchMove = (e) => {
+    if (!containerRef.current) return;
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    mouseX.set((touch.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((touch.clientY - rect.top) / rect.height - 0.5);
+  };
+
   const handleMouseLeave = () => {
     mouseX.set(0);
     mouseY.set(0);
@@ -43,6 +51,10 @@ export const Logo3D = ({ size = 'md', className = '' }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={handleMouseLeave}
+      onTouchCancel={handleMouseLeave}
     >
       <motion.div
         style={{

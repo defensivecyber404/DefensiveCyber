@@ -27,6 +27,12 @@ export const Hero = () => {
     cursorY.set(e.clientY);
   };
 
+  const handleTouchMove = (e) => {
+    const touch = e.touches[0];
+    cursorX.set(touch.clientX);
+    cursorY.set(touch.clientY);
+  };
+
   const bubbleScale = useTransform(() => {
     const dx = cursorX.get() - springX.get();
     const dy = cursorY.get() - springY.get();
@@ -71,9 +77,13 @@ export const Hero = () => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onTouchMove={handleTouchMove}
+      onTouchStart={() => setIsHovering(true)}
+      onTouchEnd={() => setIsHovering(false)}
+      onTouchCancel={() => setIsHovering(false)}
     >
       {/* Trailing Bubble Effect */}
-      {typeof window !== 'undefined' && window.innerWidth >= 768 && (
+      {typeof window !== 'undefined' && (
         <motion.div
           className="fixed top-0 left-0 w-32 h-32 rounded-full pointer-events-none z-0"
           style={{
