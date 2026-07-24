@@ -11,6 +11,7 @@ import { FAQPage } from './pages/FAQPage';
 import { AboutPage } from './pages/AboutPage';
 import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
 import { CustomCursor } from './components/ui/CustomCursor';
+import { AnimatedBackground } from './components/ui/AnimatedBackground';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="relative min-h-screen text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
+        <div className="relative min-h-screen mesh-bg text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
           <Navbar />
           
           <Routes>
@@ -39,6 +40,7 @@ function App() {
             <Route path="/legal" element={<PrivacyTermsPage />} />
           </Routes>
 
+          <AnimatedBackground />
           <Footer />
         </div>
       </BrowserRouter>

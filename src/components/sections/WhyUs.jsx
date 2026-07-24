@@ -35,7 +35,7 @@ const Counter = ({ value, suffix }) => {
   }, [isInView, value]);
 
   return (
-    <span ref={ref} className="text-5xl md:text-6xl lg:text-7xl font-black font-sans text-[#0F172A] tracking-tighter">
+    <span ref={ref} className="text-5xl md:text-6xl lg:text-7xl font-black font-sans text-white tracking-tighter">
       {count}
       <span>{suffix}</span>
     </span>
@@ -60,7 +60,7 @@ export const WhyUs = () => {
                 <stat.icon className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-[#D4AF37] drop-shadow-md" strokeWidth={2} />
                 <Counter value={stat.value} suffix={stat.suffix} />
               </div>
-              <p className="mt-1 text-sm md:text-base text-gray-800 font-medium tracking-wide">
+              <p className="mt-1 text-sm md:text-base text-gray-300 font-medium tracking-wide">
                 {stat.label}
               </p>
             </motion.div>

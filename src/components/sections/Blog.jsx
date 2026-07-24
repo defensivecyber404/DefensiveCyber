@@ -33,22 +33,22 @@ export const Blog = () => {
     <section id="blog" className="py-24 relative z-10 bg-transparent">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 z-[-1] opacity-100"
+        className="absolute inset-0 z-0 opacity-100"
         style={{
-          backgroundImage: "url('/backgroundImage3.png')",
+          backgroundImage: "none",
           backgroundSize: 'cover',
           backgroundPosition: 'top center',
           backgroundRepeat: 'no-repeat',
           filter: 'brightness(1.2)'
         }}
       />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="relative mb-16 z-20">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
-              Stay Up To <span className="text-primary">Date</span>
+            <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6">
+              <span className="glossy-neon-white pb-1">Stay Up To</span> <span className="glossy-neon-purple pb-1">Date</span>
             </h2>
-            <p className="text-white font-medium text-lg drop-shadow-md">
+            <p className="text-white font-medium text-base drop-shadow-md">
               The latest insights, news, and updates from the cybersecurity frontlines.
             </p>
           </div>
@@ -65,13 +65,13 @@ export const Blog = () => {
               className="flex flex-col h-full"
             >
                 <h3 
-                  className="text-3xl md:text-4xl font-black uppercase text-[#0F172A] mb-6 text-center"
+                  className="text-3xl md:text-4xl font-black uppercase text-[#c77dff] mb-6 text-center pb-2"
                   style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
                 >
                   {post.type}
                 </h3>
                 <motion.div
-                  className="group flex flex-col flex-grow rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] bg-black/60 dark:bg-black/60 backdrop-blur-2xl"
+                  className="group flex flex-col flex-grow rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-xl bg-black/30 backdrop-blur-sm"
                 >
                   <div className="p-8 flex flex-col flex-grow text-center min-w-0 w-full">
                     <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors mb-3 break-all break-words">

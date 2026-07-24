@@ -82,32 +82,33 @@ export const Hero = () => {
       onTouchEnd={() => setIsHovering(false)}
       onTouchCancel={() => setIsHovering(false)}
     >
-      {/* Trailing Bubble Effect */}
+      {/* Trailing Tech Cursor Effect */}
       {typeof window !== 'undefined' && (
         <motion.div
-          className="fixed top-0 left-0 w-32 h-32 rounded-full pointer-events-none z-0"
+          className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-10 border border-[#c77dff]/40 rounded-full flex items-center justify-center bg-[#c77dff]/5"
           style={{
             x: springX,
             y: springY,
             scale: bubbleScale,
             translateX: '-50%',
             translateY: '-50%',
-            backgroundColor: 'rgba(15, 23, 42, 0.4)', // Dark translucent color
-            backdropFilter: 'blur(4px)',
-            opacity: isHovering ? 1 : 0
+            opacity: isHovering ? 1 : 0,
+            backdropFilter: 'blur(2px)',
+            boxShadow: '0 0 20px rgba(199,125,255,0.2)'
           }}
           transition={{ opacity: { duration: 0.3 } }}
-        />
+        >
+          <div className="w-1.5 h-1.5 bg-[#c77dff] rounded-full shadow-[0_0_10px_#c77dff]" />
+          <div className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#c77dff]/30 -translate-x-1/2" />
+          <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-[#c77dff]/30 -translate-y-1/2" />
+        </motion.div>
       )}
 
-      {/* Background Image for Hero Section */}
+      {/* Radial Gradient Background for Hero Section */}
       <div
-        className="absolute inset-0 z-[-1] opacity-100 dark:opacity-100"
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: "url('/BackgroundImage.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          background: 'radial-gradient(circle at center, rgba(236, 72, 153, 0.15) 0%, transparent 50%, rgba(5, 1, 10, 0.9) 100%)'
         }}
       />
 
@@ -122,23 +123,23 @@ export const Hero = () => {
           >
 
             <h1 className="mb-6 flex flex-col gap-1">
-              <span className="text-sm md:text-base font-serif uppercase tracking-[0.3em] text-gray-900 dark:text-gray-900 mb-2 font-semibold dark:font-semibold drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
+              <span className="text-sm md:text-base font-serif uppercase tracking-[0.3em] text-gray-200 mb-2 font-semibold">
                 The Art of
               </span>
-              <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-silver pb-1">
+              <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-neon-white pb-1">
                 Digital
               </span>
-              <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-gold pb-2">
+              <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-neon-purple pb-2">
                 Defense
               </span>
             </h1>
 
-            <p className="mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-orbitron font-medium tracking-[0.15em] uppercase text-sm md:text-base text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-800 drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
+            <p className="mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-orbitron font-medium tracking-[0.15em] uppercase text-sm md:text-base text-gray-300">
               Sophisticated Cyber Defense for a Connected World
             </p>
 
-            <div className="h-8 mb-8 text-xl font-mono text-gray-900 dark:text-gray-900 font-bold drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
-              <span className="text-gray-800">{'>'} </span>
+            <div className="h-8 mb-8 text-xl font-mono text-gray-300 font-bold">
+              <span className="text-accent">{'>'} </span>
               {currentText}
               <span className="animate-pulse">_</span>
             </div>

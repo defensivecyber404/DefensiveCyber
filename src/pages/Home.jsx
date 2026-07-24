@@ -56,7 +56,7 @@ export const Home = () => {
       </div>
       
       {/* Whitish Golden Theme Sections */}
-      <div className="relative bg-[#FDF8E7]">
+      <div className="relative bg-transparent">
         <div className="relative z-10">
           <WhyUs />
           <CaseStudiesSlider />

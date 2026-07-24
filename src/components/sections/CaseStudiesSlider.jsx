@@ -52,10 +52,10 @@ export const CaseStudiesSlider = () => {
         
         <div className="max-w-4xl mx-auto mb-4 pl-2 md:pl-0">
           <h4 
-            className="text-[#0F172A] font-bold tracking-widest text-sm md:text-base uppercase"
+            className="text-white font-bold tracking-widest text-sm md:text-base uppercase"
             style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
           >
-            CLIENT REVIEW
+            CLIENT <span className="text-[#c77dff]">REVIEW</span>
           </h4>
         </div>
 
@@ -66,7 +66,7 @@ export const CaseStudiesSlider = () => {
           <div className="hidden lg:flex absolute top-1/2 -left-6 md:-left-20 -translate-y-1/2 z-20">
             <button 
               onClick={prevSlide}
-              className="w-12 h-12 rounded-full bg-white/60 backdrop-blur-md flex items-center justify-center shadow-md border border-[#0F172A]/10 hover:scale-110 hover:bg-white/90 transition-all text-[#0F172A]"
+              className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center shadow-md border border-white/10 hover:scale-110 hover:bg-black/90 transition-all text-white"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -74,14 +74,14 @@ export const CaseStudiesSlider = () => {
           <div className="hidden lg:flex absolute top-1/2 -right-6 md:-right-20 -translate-y-1/2 z-20">
             <button 
               onClick={nextSlide}
-              className="w-12 h-12 rounded-full bg-white/60 backdrop-blur-md flex items-center justify-center shadow-md border border-[#0F172A]/10 hover:scale-110 hover:bg-white/90 transition-all text-[#0F172A]"
+              className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center shadow-md border border-white/10 hover:scale-110 hover:bg-black/90 transition-all text-white"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
 
           {/* The Card with 3D Effect */}
-          <div className="bg-gradient-to-br from-white/90 to-white/50 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden border border-white/80 relative z-10 w-full transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(0,0,0,0.2)]">
+          <div className="bg-gradient-to-br from-black/40 to-black/20 backdrop-blur-sm rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden border border-white/10 relative z-10 w-full transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
             <div className="min-h-[250px] flex items-center justify-center">
               <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative w-full text-center">
                 <AnimatePresence mode="wait">
@@ -93,13 +93,13 @@ export const CaseStudiesSlider = () => {
                     transition={{ duration: 0.4 }}
                     className="w-full"
                   >
-                    <p className="text-gray-800 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                    <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-6 font-medium">
                       "{slide.text}"
                     </p>
                     
                     <div className="mt-6 flex flex-col items-center">
                       {slide.companyAndPost && (
-                        <p className="font-bold font-space text-[#0F172A] text-sm md:text-base text-center max-w-2xl">{slide.companyAndPost}</p>
+                        <p className="font-bold font-space text-white text-sm md:text-base text-center max-w-2xl">{slide.companyAndPost}</p>
                       )}
                     </div>
                   </motion.div>
@@ -109,15 +109,15 @@ export const CaseStudiesSlider = () => {
                 <div className="flex gap-4 mt-8 lg:hidden justify-center">
                   <button 
                     onClick={prevSlide}
-                    className="w-10 h-10 rounded-full bg-white/70 border border-gray-300 shadow-sm flex items-center justify-center hover:bg-white transition-colors"
+                    className="w-10 h-10 rounded-full bg-black/70 border border-gray-700 shadow-sm flex items-center justify-center hover:bg-black transition-colors"
                   >
-                    <ArrowLeft className="w-4 h-4 text-gray-800" />
+                    <ArrowLeft className="w-4 h-4 text-gray-200" />
                   </button>
                   <button 
                     onClick={nextSlide}
-                    className="w-10 h-10 rounded-full bg-white/70 border border-gray-300 shadow-sm flex items-center justify-center hover:bg-white transition-colors"
+                    className="w-10 h-10 rounded-full bg-black/70 border border-gray-700 shadow-sm flex items-center justify-center hover:bg-black transition-colors"
                   >
-                    <ArrowRight className="w-4 h-4 text-gray-800" />
+                    <ArrowRight className="w-4 h-4 text-gray-200" />
                   </button>
                 </div>
               </div>
@@ -129,23 +129,23 @@ export const CaseStudiesSlider = () => {
         <div className="mt-24 max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-10">
             <h4 
-              className="text-[#0F172A] font-bold tracking-widest text-sm md:text-base uppercase opacity-80"
+              className="text-white font-bold tracking-widest text-sm md:text-base uppercase"
               style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
             >
-              Clients We've Worked With
+              CLIENTS WE'VE WORKED <span className="text-[#c77dff]">WITH</span>
             </h4>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {clients.map((client, idx) => (
               <div 
                 key={idx} 
-                className="bg-white/40 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center border border-[#0F172A]/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all group"
+                className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 flex flex-col items-center justify-center border border-white/10 shadow-xl hover:-translate-y-1 transition-all group"
               >
-                <h5 className="font-bold font-space text-[#111827] text-center text-lg md:text-xl leading-tight mb-2 group-hover:text-primary transition-colors">
+                <h5 className="font-bold font-space text-white text-center text-lg md:text-xl leading-tight mb-2 group-hover:text-primary transition-colors">
                   {client.name}
                 </h5>
                 {client.location && (
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-widest">
+                  <span className="text-xs font-medium text-gray-400 uppercase tracking-widest">
                     {client.location}
                   </span>
                 )}

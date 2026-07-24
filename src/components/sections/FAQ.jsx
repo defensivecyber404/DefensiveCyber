@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-const faqs = [
-  {
-    question: "What exactly happens during a Penetration Test?",
-    answer: "A penetration test is a simulated cyber attack against your computer system to check for exploitable vulnerabilities. We use the same techniques as malicious hackers, but safely and with your permission, to identify weak spots before criminals can exploit them."
-  },
-  {
-    question: "How long does a typical security assessment take?",
-    answer: "The duration depends on the scope and complexity of your infrastructure. A small web application might take 1-2 weeks, while a comprehensive enterprise-wide assessment could take 4-6 weeks. We provide a detailed timeline during the scoping phase."
-  },
-  {
-    question: "Will your testing disrupt our normal business operations?",
-    answer: "Our primary goal is to assess security without causing disruption. We carefully schedule intrusive tests during maintenance windows and closely monitor system health. If we identify a critical vulnerability that could cause a crash, we immediately stop and notify your team."
-  },
-  {
-    question: "Do you help fix the vulnerabilities you find?",
-    answer: "Yes. Our reports include detailed remediation steps and proof-of-concept exploits. We also offer remediation support consulting to help your development and IT teams implement the recommended fixes effectively."
-  },
-  {
-    question: "Are your services compliant with SOC2 and ISO 27001?",
-    answer: "Absolutely. Our methodologies align with industry standards including OWASP, NIST, and PTES. Our reports can be used as evidence of independent security testing for SOC2, ISO 27001, PCI-DSS, and HIPAA audits."
-  }
-];
+import { useAuth } from '../../contexts/AuthContext';
+import { Edit, Trash2, Plus } from 'lucide-react';
+import { fetchFaqs, deleteFaq } from '../../utils/faqStore';
+import { FaqFormModal } from '../ui/FaqFormModal';
 
 export const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(null);
+  const [faqs, setFaqs] = useState([]);
+  const { isAuthenticated, token } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingFaq, setEditingFaq] = useState(null);
+
+  const loadFaqs = async () => {
+    const data = await fetchFaqs();
+    setFaqs(data);
+  };
+
+  useEffect(() => {
+    loadFaqs();
+  }, []);
+
+  const handleEdit = (faq) => {
+    setEditingFaq(faq);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this FAQ?')) {
+      try {
+        await deleteFaq(id, token);
+        loadFaqs();
+      } catch (err) {
+        console.error('Failed to delete FAQ', err);
+      }
+    }
+  };
 
   return (
     <section id="faq" className="py-24 relative z-10">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold font-space mb-6 text-[#0F172A]">
-            Frequently Asked <span className="text-primary">Questions</span>
+          <h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-black uppercase mb-6 text-white drop-shadow-md"
+            style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
+          >
+            FREQUENTLY ASKED <span className="text-[#c77dff]">QUESTIONS</span>
           </h2>
-          <p className="text-[#0F172A]/70">
+          <p className="text-gray-300 drop-shadow-sm">
             Clear answers to common questions about our security services.
           </p>
+          {isAuthenticated && (
+            <div className="mt-8">
+              <button 
+                onClick={() => { setEditingFaq(null); setIsModalOpen(true); }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition-colors border border-white/20 shadow-lg"
+              >
+                <Plus className="w-5 h-5" />
+                Add New FAQ
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -48,18 +73,30 @@ export const FAQ = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`bg-white/50 backdrop-blur-md border border-[#0F172A]/10 shadow-sm rounded-xl overflow-hidden transition-colors duration-300 ${openIndex === index ? 'border-primary/50 bg-white/80' : ''}`}
+              className={`bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-xl overflow-hidden transition-colors duration-300 ${openIndex === index ? 'border-[#c77dff]/50 bg-white/10' : ''}`}
             >
                 <button
                   className="w-full text-left p-6 flex justify-between items-center focus:outline-none"
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 >
-                  <span className={`font-space font-semibold pr-8 ${openIndex === index ? 'text-primary' : 'text-[#0F172A]'}`}>
+                  <span className={`font-space font-semibold pr-8 ${openIndex === index ? 'text-[#c77dff]' : 'text-white'}`}>
                     {faq.question}
                   </span>
-                  <ChevronDown 
-                    className={`w-5 h-5 shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180 text-primary' : 'text-[#0F172A]/50'}`} 
-                  />
+                  <div className="flex items-center gap-2">
+                    {isAuthenticated && (
+                      <div className="flex gap-2 mr-2" onClick={(e) => e.stopPropagation()}>
+                        <button onClick={() => handleEdit(faq)} className="p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors">
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => handleDelete(faq._id || faq.id)} className="p-2 bg-white/10 hover:bg-red-500 hover:text-white text-red-400 rounded-full transition-colors">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+                    <ChevronDown 
+                      className={`w-5 h-5 shrink-0 transition-transform duration-300 ${openIndex === index ? 'rotate-180 text-[#c77dff]' : 'text-gray-400'}`} 
+                    />
+                  </div>
                 </button>
               
               <AnimatePresence>
@@ -70,7 +107,7 @@ export const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="p-6 pt-0 text-[#0F172A]/80 leading-relaxed border-t border-[#0F172A]/10">
+                    <div className="p-6 pt-0 text-gray-300 leading-relaxed border-t border-white/10">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -80,6 +117,13 @@ export const FAQ = () => {
           ))}
         </div>
       </div>
+
+      <FaqFormModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialData={editingFaq}
+        onSuccess={loadFaqs}
+      />
     </section>
   );
 };

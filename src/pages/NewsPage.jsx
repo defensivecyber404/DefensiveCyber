@@ -62,17 +62,7 @@ export const NewsPage = () => {
 
   return (
     <main className="pt-24 pb-24 relative min-h-screen text-gray-900">
-      {/* Background Image Overlay */}
-      <div 
-        className="absolute inset-0 z-[-1]"
-        style={{
-          backgroundImage: "url('/backgroundImageNewsBlog.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      />
+      
       
       <div className="container mx-auto px-6 relative z-10">
         <button 
@@ -84,7 +74,7 @@ export const NewsPage = () => {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }, 300);
           }}
-          className="absolute top-0 left-6 lg:left-12 group z-50 flex items-center justify-center text-sm font-bold text-gray-900 hover:text-primary transition-all backdrop-blur-md bg-transparent border border-gray-900/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-gray-900/5 px-6 py-2.5 rounded-full w-max cursor-pointer"
+          className="absolute top-0 left-6 lg:left-12 group z-50 flex items-center justify-center text-sm font-bold text-white hover:text-primary transition-all backdrop-blur-md bg-white/5 border border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/10 px-6 py-2.5 rounded-full w-max cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
           Back
@@ -94,10 +84,10 @@ export const NewsPage = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black uppercase mb-6 text-gray-900 drop-shadow-sm"
+            className="text-4xl md:text-5xl font-black uppercase mb-6"
             style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
           >
-            <span className="text-gray-900 drop-shadow-sm">NEWS</span>
+            <span className="glossy-neon-purple pb-1">NEWS</span>
           </motion.h1>
         </div>
 
@@ -121,7 +111,7 @@ export const NewsPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group bg-transparent backdrop-blur-md flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-gray-900/20 shadow-lg relative"
+              className="group bg-black/40 backdrop-blur-xl flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-2xl relative"
             >
               {isAuthenticated && !post.isExternal && (
                 <div className="absolute top-4 right-4 z-20 flex gap-2">
@@ -141,11 +131,11 @@ export const NewsPage = () => {
               )}
 
               <div className="p-8 flex flex-col flex-grow text-left min-w-0 w-full">
-                <h3 className="text-xl font-bold font-space text-gray-900 group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16 break-all break-words">
+                <h3 className="text-xl font-bold font-space text-white group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16 break-all break-words">
                   {post.title}
                 </h3>
                 
-                <p className="text-gray-800 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm break-all break-words whitespace-pre-wrap line-clamp-3">
+                <p className="text-gray-300 text-sm leading-relaxed mb-6 flex-grow drop-shadow-sm break-all break-words whitespace-pre-wrap line-clamp-3">
                   {post.excerpt}
                 </p>
                 
@@ -155,7 +145,7 @@ export const NewsPage = () => {
                       href={post.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-sm font-bold text-gray-900 hover:text-primary transition-colors cursor-pointer"
+                      className="inline-flex items-center text-sm font-bold text-white hover:text-primary transition-colors cursor-pointer"
                     >
                       Read on Source 
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -164,14 +154,14 @@ export const NewsPage = () => {
                     <Link 
                       to={`/post/${post._id || post.id}`} 
                       state={{ from: '/news' }}
-                      className="inline-flex items-center text-sm font-bold text-gray-900 hover:text-primary transition-colors cursor-pointer"
+                      className="inline-flex items-center text-sm font-bold text-white hover:text-primary transition-colors cursor-pointer"
                     >
                       Read More 
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   )}
                   <span 
-                    className="text-xs font-bold text-gray-600 drop-shadow-sm"
+                    className="text-xs font-bold text-gray-400 drop-shadow-sm"
                   >
                     {new Date(post.created_at || post.date || Date.now()).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' })}
                   </span>

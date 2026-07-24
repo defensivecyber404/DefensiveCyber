@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth');
 const postsRoutes = require('./routes/posts');
 const contactRoutes = require('./routes/contact');
 const newsRoutes = require('./routes/news');
+const faqRoutes = require('./routes/faqs');
 const initDB = require('./database');
 
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postsRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/faqs', faqRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

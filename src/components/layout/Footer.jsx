@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#0B0F19] border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-[#080312] border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 

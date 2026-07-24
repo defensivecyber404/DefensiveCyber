@@ -11,17 +11,7 @@ export const PrivacyTermsPage = () => {
 
   return (
     <main className="pt-32 pb-24 relative min-h-screen bg-transparent text-white">
-      {/* Background Image Overlay */}
-      <div 
-        className="absolute inset-0 z-[-1]"
-        style={{
-          backgroundImage: "url('/backgroundImageAboutUs.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      />
+      
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-8">
           <button 

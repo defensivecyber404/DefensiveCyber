@@ -1,0 +1,550 @@
+﻿diff --git a/public/BackgroundImage.png b/public/BackgroundImage.png
+deleted file mode 100644
+index 2444122..0000000
+Binary files a/public/BackgroundImage.png and /dev/null differ
+diff --git a/public/backgroundImage2.png b/public/backgroundImage2.png
+deleted file mode 100644
+index 686e788..0000000
+Binary files a/public/backgroundImage2.png and /dev/null differ
+diff --git a/public/backgroundImage3.png b/public/backgroundImage3.png
+deleted file mode 100644
+index 5645bcd..0000000
+Binary files a/public/backgroundImage3.png and /dev/null differ
+diff --git a/public/backgroundImageAboutUs.png b/public/backgroundImageAboutUs.png
+deleted file mode 100644
+index 1a424cf..0000000
+Binary files a/public/backgroundImageAboutUs.png and /dev/null differ
+diff --git a/public/backgroundImageNewsBlog.png b/public/backgroundImageNewsBlog.png
+deleted file mode 100644
+index abb9962..0000000
+Binary files a/public/backgroundImageNewsBlog.png and /dev/null differ
+diff --git a/src/App.jsx b/src/App.jsx
+index ffd7598..d89d2d4 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -11,6 +11,7 @@ import { FAQPage } from './pages/FAQPage';
+ import { AboutPage } from './pages/AboutPage';
+ import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
+ import { CustomCursor } from './components/ui/CustomCursor';
++import { FireParticles } from './components/ui/FireParticles';
+ import { AuthProvider } from './contexts/AuthContext';
+ 
+ function App() {
+@@ -25,7 +26,7 @@ function App() {
+   return (
+     <AuthProvider>
+       <BrowserRouter>
+-        <div className="relative min-h-screen text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
++        <div className="relative min-h-screen mesh-bg text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
+           <Navbar />
+           
+           <Routes>
+@@ -39,6 +40,7 @@ function App() {
+             <Route path="/legal" element={<PrivacyTermsPage />} />
+           </Routes>
+ 
++          <FireParticles />
+           <Footer />
+         </div>
+       </BrowserRouter>
+diff --git a/src/components/sections/Blog.jsx b/src/components/sections/Blog.jsx
+index 2796944..a8289cd 100644
+--- a/src/components/sections/Blog.jsx
++++ b/src/components/sections/Blog.jsx
+@@ -31,24 +31,14 @@ export const Blog = () => {
+ 
+   return (
+     <section id="blog" className="py-24 relative z-10 bg-transparent">
+-      {/* Background Image */}
+-      <div 
+-        className="absolute inset-0 z-[-1] opacity-100"
+-        style={{
+-          backgroundImage: "url('/backgroundImage3.png')",
+-          backgroundSize: 'cover',
+-          backgroundPosition: 'top center',
+-          backgroundRepeat: 'no-repeat',
+-          filter: 'brightness(1.2)'
+-        }}
+-      />
+-      <div className="container mx-auto px-6">
++
++      <div className="container mx-auto px-6 relative z-10">
+         <div className="relative mb-16 z-20">
+           <div className="text-center max-w-3xl mx-auto">
+-            <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
+-              Stay Up To <span className="text-primary">Date</span>
++            <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-white">
++              Stay Up To <span className="light-golden pb-1">Date</span>
+             </h2>
+-            <p className="text-white font-medium text-lg drop-shadow-md">
++            <p className="text-white font-medium text-base drop-shadow-md">
+               The latest insights, news, and updates from the cybersecurity frontlines.
+             </p>
+           </div>
+@@ -65,7 +55,7 @@ export const Blog = () => {
+               className="flex flex-col h-full"
+             >
+                 <h3 
+-                  className="text-3xl md:text-4xl font-black uppercase text-[#0F172A] mb-6 text-center"
++                  className="text-3xl md:text-4xl font-black uppercase light-golden-glow mb-6 text-center pb-2"
+                   style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
+                 >
+                   {post.type}
+diff --git a/src/components/sections/Contact.jsx b/src/components/sections/Contact.jsx
+index e7ab4b4..233c0e7 100644
+--- a/src/components/sections/Contact.jsx
++++ b/src/components/sections/Contact.jsx
+@@ -2,7 +2,7 @@ import React, { useState } from 'react';
+ import { motion } from 'framer-motion';
+ import { Send, ShieldCheck, ArrowRight } from 'lucide-react';
+ import { submitContact } from '../../utils/blogStore';
+-import contactBg from '../../assets/backgroundImagelast.png';
++
+ 
+ export const Contact = () => {
+   const [isSubmitting, setIsSubmitting] = useState(false);
+@@ -37,7 +37,7 @@ export const Contact = () => {
+       id="contact" 
+       className="py-24 relative z-10 bg-transparent"
+       style={{
+-        backgroundImage: `url(${contactBg})`,
++        backgroundImage: "none",
+         backgroundSize: 'cover',
+         backgroundPosition: 'center',
+         backgroundRepeat: 'no-repeat',
+@@ -52,18 +52,18 @@ export const Contact = () => {
+             viewport={{ once: true }}
+             transition={{ duration: 0.5, delay: 0.2 }}
+           >
+-            <div className="bg-white/40 backdrop-blur-xl border border-white/50 shadow-xl p-8 md:p-10 rounded-3xl relative overflow-hidden">
++            <div className="bg-black/30 backdrop-blur-sm border border-white/10 shadow-xl p-8 md:p-10 rounded-3xl relative overflow-hidden">
+               {/* Form glowing accent */}
+               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+               
+               <div className="text-center mb-8">
+                 <h3 
+-                  className="text-xl md:text-2xl lg:text-[1.7rem] leading-tight font-black uppercase text-[#0F172A] mb-2"
++                  className="text-xl md:text-2xl lg:text-[1.7rem] leading-tight font-black uppercase text-white mb-2"
+                   style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
+                 >
+                   WANT TO STAY CONNECTED?
+                 </h3>
+-                <p className="text-[#0F172A]/70 text-sm md:text-base max-w-2xl mx-auto">
++                <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto">
+                   Partner with our elite cybersecurity team to fortify your digital infrastructure, mitigate risks, and respond rapidly to emerging threats.
+                 </p>
+               </div>
+@@ -71,29 +71,29 @@ export const Contact = () => {
+               <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                   <div className="space-y-2">
+-                    <label className="text-sm font-normal text-[#0F172A]">Full Name</label>
++                    <label className="text-sm font-normal text-gray-200">Full Name</label>
+                     <input 
+                       type="text" 
+                       name="name"
+                       required
+-                      className="w-full bg-white/60 border border-white/50 shadow-sm rounded-lg px-4 py-3 text-[#0F172A] placeholder:text-[#0F172A]/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
++                      className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                       placeholder="Name"
+                     />
+                   </div>
+                   <div className="space-y-2">
+-                    <label className="text-sm font-normal text-[#0F172A]">Work Email</label>
++                    <label className="text-sm font-normal text-gray-200">Work Email</label>
+                     <input 
+                       type="email" 
+                       name="email"
+                       required
+-                      className="w-full bg-white/60 border border-white/50 shadow-sm rounded-lg px-4 py-3 text-[#0F172A] placeholder:text-[#0F172A]/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
++                      className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                       placeholder="company@email.com"
+                     />
+                   </div>
+                   <div className="space-y-2">
+-                    <label className="text-sm font-normal text-[#0F172A]">Service Required</label>
+-                    <select name="service" defaultValue="" className="w-full bg-white/60 border border-white/50 shadow-sm rounded-lg px-4 py-3 text-[#0F172A] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+-                      <option value="" disabled hidden className="text-black">Select a service</option>
++                    <label className="text-sm font-normal text-gray-200">Service Required</label>
++                    <select name="service" defaultValue="" className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
++                      <option value="" disabled hidden className="text-gray-400">Select a service</option>
+                       <option value="digital-forensics" className="text-black">Digital Forensics</option>
+                       <option value="cyber-threat-intelligence" className="text-black">Cyber Threat Intelligence</option>
+                       <option value="incident-response" className="text-black">Incident Response</option>
+@@ -104,12 +104,12 @@ export const Contact = () => {
+                 </div>
+ 
+                 <div className="space-y-2">
+-                  <label className="text-sm font-normal text-[#0F172A]">Message</label>
++                  <label className="text-sm font-normal text-gray-200">Message</label>
+                   <textarea 
+                     name="message"
+                     required
+                     rows={3}
+-                    className="w-full bg-white/60 border border-white/50 shadow-sm rounded-lg px-4 py-3 text-[#0F172A] placeholder:text-[#0F172A]/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
++                    className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
+                     placeholder="Tell us about your security needs..."
+                   />
+                 </div>
+@@ -118,7 +118,7 @@ export const Contact = () => {
+                   <button 
+                     type="submit" 
+                     disabled={isSubmitting || submitted}
+-                    className={`${submitted ? 'bg-success text-background-darker' : 'bg-[#040816] text-white hover:bg-primary hover:text-[#040816]'} px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-colors shadow-lg`}
++                    className={`${submitted ? 'bg-success text-black' : 'bg-white text-black hover:bg-primary hover:text-white'} px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 transition-colors shadow-lg`}
+                   >
+                     {isSubmitting ? (
+                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+diff --git a/src/components/sections/Hero.jsx b/src/components/sections/Hero.jsx
+index 4fc1475..2985faf 100644
+--- a/src/components/sections/Hero.jsx
++++ b/src/components/sections/Hero.jsx
+@@ -85,7 +85,7 @@ export const Hero = () => {
+       {/* Trailing Bubble Effect */}
+       {typeof window !== 'undefined' && (
+         <motion.div
+-          className="fixed top-0 left-0 w-32 h-32 rounded-full pointer-events-none z-0"
++          className="fixed top-0 left-0 w-32 h-32 rounded-full pointer-events-none z-10"
+           style={{
+             x: springX,
+             y: springY,
+@@ -100,16 +100,7 @@ export const Hero = () => {
+         />
+       )}
+ 
+-      {/* Background Image for Hero Section */}
+-      <div
+-        className="absolute inset-0 z-[-1] opacity-100 dark:opacity-100"
+-        style={{
+-          backgroundImage: "url('/BackgroundImage.png')",
+-          backgroundSize: 'cover',
+-          backgroundPosition: 'center',
+-          backgroundRepeat: 'no-repeat'
+-        }}
+-      />
++
+ 
+       <div className="container mx-auto px-6 relative z-10">
+         <div className="grid lg:grid-cols-2 gap-12 items-center">
+@@ -122,7 +113,7 @@ export const Hero = () => {
+           >
+ 
+             <h1 className="mb-6 flex flex-col gap-1">
+-              <span className="text-sm md:text-base font-serif uppercase tracking-[0.3em] text-gray-900 dark:text-gray-900 mb-2 font-semibold dark:font-semibold drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
++              <span className="text-sm md:text-base font-serif uppercase tracking-[0.3em] text-gray-200 mb-2 font-semibold">
+                 The Art of
+               </span>
+               <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-silver pb-1">
+@@ -133,12 +124,12 @@ export const Hero = () => {
+               </span>
+             </h1>
+ 
+-            <p className="mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-orbitron font-medium tracking-[0.15em] uppercase text-sm md:text-base text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-900 dark:to-gray-800 drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
++            <p className="mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-orbitron font-medium tracking-[0.15em] uppercase text-sm md:text-base text-gray-300">
+               Sophisticated Cyber Defense for a Connected World
+             </p>
+ 
+-            <div className="h-8 mb-8 text-xl font-mono text-gray-900 dark:text-gray-900 font-bold drop-shadow-[0_2px_4px_rgba(255,255,255,0.6)]">
+-              <span className="text-gray-800">{'>'} </span>
++            <div className="h-8 mb-8 text-xl font-mono text-gray-300 font-bold">
++              <span className="text-accent">{'>'} </span>
+               {currentText}
+               <span className="animate-pulse">_</span>
+             </div>
+diff --git a/src/components/sections/Services.jsx b/src/components/sections/Services.jsx
+index 2127d4b..6233f50 100644
+--- a/src/components/sections/Services.jsx
++++ b/src/components/sections/Services.jsx
+@@ -50,8 +50,8 @@ const ServiceCard = ({ service, index }) => {
+         
+         {/* Inner Card - Liquid Glass Translucent Effect (Apple Style) */}
+         <div className="relative h-full bg-white/5 dark:bg-black/10 backdrop-blur-2xl p-8 rounded-2xl flex flex-col items-start gap-4 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] transition-all duration-300">
+-          <div className={`p-3 rounded-lg transition-colors border ${index < 2 ? 'bg-[#0F172A]/10 border-[#0F172A]/20 group-hover:bg-[#0F172A]/20' : 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'}`}>
+-            <service.icon className={`w-8 h-8 group-hover:text-glow ${index < 2 ? 'text-[#0F172A]' : 'text-primary'}`} />
++          <div className="p-3 rounded-lg transition-colors border bg-white/10 border-white/20 group-hover:bg-white/20">
++            <service.icon className="w-8 h-8 group-hover:text-glow text-accent" />
+           </div>
+           <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+             {service.title}
+@@ -68,23 +68,14 @@ const ServiceCard = ({ service, index }) => {
+ export const Services = () => {
+   return (
+     <section id="services" className="py-24 relative z-10 bg-transparent">
+-      {/* Background Image 2 */}
+-      <div 
+-        className="absolute inset-0 z-[-1] opacity-100"
+-        style={{
+-          backgroundImage: "url('/backgroundImage2.png?v=2')",
+-          backgroundSize: 'cover',
+-          backgroundPosition: 'center',
+-          backgroundRepeat: 'no-repeat'
+-        }}
+-      />
++
+       
+-      <div className="container mx-auto px-6">
++      <div className="container mx-auto px-6 relative z-10">
+         <div className="text-center max-w-3xl mx-auto mb-16 relative z-20">
+-          <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
+-            Core <span className="text-[#C9A227]">Services</span>
++          <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-white">
++            Core <span className="light-golden pb-1">Services</span>
+           </h2>
+-          <p className="text-gray-800 font-medium text-lg mb-8">
++          <p className="text-gray-300 font-medium text-base mb-8">
+             Comprehensive cybersecurity services tailored to protect your critical assets against the most sophisticated threats.
+           </p>
+         </div>
+diff --git a/src/index.css b/src/index.css
+index 1b4eada..bc9116d 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -35,16 +35,25 @@
+   }
+ 
+   ::-webkit-scrollbar-thumb {
+-    background: rgba(212, 175, 55, 0.4);
++    background: rgba(139, 92, 246, 0.4);
+     border-radius: 999px;
+   }
+ 
+   ::-webkit-scrollbar-thumb:hover {
+-    background: rgba(212, 175, 55, 0.7);
++    background: rgba(139, 92, 246, 0.7);
+   }
+ }
+ 
+ @layer components {
++  /* ΓöÇΓöÇ Mesh Background (Violet, Golden, Black, White) ΓöÇΓöÇ */
++  .mesh-bg {
++    background-color: #03000a; /* Deep Black/Violet base */
++    background-image: 
++      radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), /* Violet */
++      radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),  /* Golden */
++      radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),  /* Violet */
++      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%); /* White */
++  }
+ 
+   /* ΓöÇΓöÇ Glass panel ΓÇö gold-tinted depth ΓöÇΓöÇ */
+   .glass-panel {
+@@ -225,10 +234,10 @@
+       linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%),
+       linear-gradient(to bottom, 
+         rgba(255, 255, 255, 1) 0%, 
+-        rgba(212, 175, 55, 0.8) 10%, 
+-        rgba(41, 18, 0, 0.85) 40%, 
+-        rgba(26, 10, 0, 0.95) 80%, 
+-        rgba(254, 240, 138, 0.7) 100%
++        #b8860b 10%, 
++        #6b4405 40%, 
++        #3b2201 80%, 
++        #a37400 100%
+       );
+     background-size: 200% auto, 100% 100%;
+     -webkit-background-clip: text;
+@@ -239,6 +248,27 @@
+     animation: shimmer 15s linear infinite;
+   }
+ 
++  .light-golden {
++    background: linear-gradient(to bottom, #ffffff 0%, #ffeb73 20%, #d4af37 60%, #c59b27 100%);
++    -webkit-background-clip: text;
++    background-clip: text;
++    -webkit-text-fill-color: transparent;
++    color: transparent;
++  }
++
++  .light-golden-glow {
++    background: 
++      linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.8) 50%, transparent 60%),
++      linear-gradient(to bottom, #ffffff 0%, #ffeb73 20%, #d4af37 60%, #c59b27 100%);
++    background-size: 200% auto, 100% 100%;
++    -webkit-background-clip: text;
++    background-clip: text;
++    -webkit-text-fill-color: transparent;
++    color: transparent;
++    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.5));
++    animation: shimmer 15s linear infinite;
++  }
++
+   /* Light theme variations */
+   html:not(.dark) .glossy-silver {
+     background: linear-gradient(to bottom, #4b5563 0%, #1f2937 42%, #030712 50%, #1f2937 58%, #111827 100%);
+diff --git a/src/pages/AboutPage.jsx b/src/pages/AboutPage.jsx
+index ab367a8..123234e 100644
+--- a/src/pages/AboutPage.jsx
++++ b/src/pages/AboutPage.jsx
+@@ -16,7 +16,7 @@ export const AboutPage = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{
+-          backgroundImage: "url('/backgroundImageAboutUs.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/AdminBlog.jsx b/src/pages/AdminBlog.jsx
+index 3d6a9f6..a76430f 100644
+--- a/src/pages/AdminBlog.jsx
++++ b/src/pages/AdminBlog.jsx
+@@ -40,7 +40,7 @@ export const AdminBlog = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{
+-          backgroundImage: "url('/backgroundImageAboutUs.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/BlogPage.jsx b/src/pages/BlogPage.jsx
+index 9e5f576..34c150c 100644
+--- a/src/pages/BlogPage.jsx
++++ b/src/pages/BlogPage.jsx
+@@ -51,7 +51,7 @@ export const BlogPage = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{
+-          backgroundImage: "url('/backgroundImageNewsBlog.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/BlogPost.jsx b/src/pages/BlogPost.jsx
+index ac1cec5..257c741 100644
+--- a/src/pages/BlogPost.jsx
++++ b/src/pages/BlogPost.jsx
+@@ -38,7 +38,7 @@ export const BlogPost = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{ 
+-          backgroundImage: 'url("/backgroundImageNewsBlog.png")',
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/FAQPage.jsx b/src/pages/FAQPage.jsx
+index cef4fc6..70ea695 100644
+--- a/src/pages/FAQPage.jsx
++++ b/src/pages/FAQPage.jsx
+@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
+ import { FAQ } from '../components/sections/FAQ';
+ import { Send, MessageCircleQuestion, ArrowLeft, ShieldCheck } from 'lucide-react';
+ import { motion } from 'framer-motion';
+-import faqBg from '../assets/backgroundImageFAQ.png';
++
+ 
+ export const FAQPage = () => {
+   const [isSubmitting, setIsSubmitting] = useState(false);
+@@ -29,7 +29,7 @@ export const FAQPage = () => {
+     <main 
+       className="pt-24 pb-24 relative min-h-screen bg-transparent"
+       style={{
+-        backgroundImage: `url(${faqBg})`,
++        backgroundImage: "none",
+         backgroundSize: 'cover',
+         backgroundPosition: 'center',
+         backgroundAttachment: 'fixed'
+diff --git a/src/pages/Home.jsx b/src/pages/Home.jsx
+index 9a0034a..a15c9ec 100644
+--- a/src/pages/Home.jsx
++++ b/src/pages/Home.jsx
+@@ -46,23 +46,28 @@ export const Home = () => {
+     };
+   }, []);
+   return (
+-    <main>
++    <main className="bg-transparent">
++      {/* Top Fire Theme Sections */}
+       <Hero />
+       <Services />
+-      <div className="relative -mt-[1px]">
++      <div className="relative">
+         <div className="relative z-10">
+           <Blog />
+         </div>
+       </div>
+       
+-      {/* Whitish Golden Theme Sections */}
+-      <div className="relative bg-[#FDF8E7]">
+-        <div className="relative z-10">
++      {/* Middle Fire Theme Sections */}
++      <div className="relative bg-transparent">
++        <div className="relative z-10 py-12">
+           <WhyUs />
+           <CaseStudiesSlider />
+-          <div ref={contactRef}>
+-            <Contact />
+-          </div>
++        </div>
++      </div>
++      
++      {/* Bottom Fire Theme Sections */}
++      <div className="relative bg-transparent pt-12">
++        <div ref={contactRef}>
++          <Contact />
+         </div>
+       </div>
+       
+diff --git a/src/pages/NewsPage.jsx b/src/pages/NewsPage.jsx
+index 424c30c..8468082 100644
+--- a/src/pages/NewsPage.jsx
++++ b/src/pages/NewsPage.jsx
+@@ -66,7 +66,7 @@ export const NewsPage = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{
+-          backgroundImage: "url('/backgroundImageNewsBlog.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/PrivacyTermsPage.jsx b/src/pages/PrivacyTermsPage.jsx
+index 4c37195..219495b 100644
+--- a/src/pages/PrivacyTermsPage.jsx
++++ b/src/pages/PrivacyTermsPage.jsx
+@@ -15,7 +15,7 @@ export const PrivacyTermsPage = () => {
+       <div 
+         className="absolute inset-0 z-[-1]"
+         style={{
+-          backgroundImage: "url('/backgroundImageAboutUs.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/src/pages/ServicesPage.jsx b/src/pages/ServicesPage.jsx
+index c3cbe6d..102ecd1 100644
+--- a/src/pages/ServicesPage.jsx
++++ b/src/pages/ServicesPage.jsx
+@@ -75,7 +75,7 @@ export const ServicesPage = () => {
+       <div 
+         className="absolute inset-0 z-0 opacity-100 dark:opacity-50 rotate-180"
+         style={{
+-          backgroundImage: "url('/backgroundImageServices.png')",
++          backgroundImage: "none",
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat',
+diff --git a/tailwind.config.js b/tailwind.config.js
+index f92404b..7e0f543 100644
+--- a/tailwind.config.js
++++ b/tailwind.config.js
+@@ -13,8 +13,8 @@ export default {
+           darker: '#000000',
+         },
+         primary: {
+-          DEFAULT: '#d4af37', // gold
+-          dark: '#aa8c2c',
++          DEFAULT: '#8b5cf6', // violet
++          dark: '#6d28d9',
+         },
+         secondary: {
+           DEFAULT: '#c0c0c0', // silver
+@@ -33,7 +33,7 @@ export default {
+         monument: ['"Monument Extended"', 'sans-serif'],
+       },
+       backgroundImage: {
+-        'cyber-grid': 'linear-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.15) 1px, transparent 1px)',
++        'cyber-grid': 'linear-gradient(rgba(139, 92, 246, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.15) 1px, transparent 1px)',
+         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+       },
+       animation: {

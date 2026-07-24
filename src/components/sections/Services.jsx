@@ -49,9 +49,9 @@ const ServiceCard = ({ service, index }) => {
         />
         
         {/* Inner Card - Liquid Glass Translucent Effect (Apple Style) */}
-        <div className="relative h-full bg-white/5 dark:bg-black/10 backdrop-blur-2xl p-8 rounded-2xl flex flex-col items-start gap-4 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.1)] transition-all duration-300">
-          <div className={`p-3 rounded-lg transition-colors border ${index < 2 ? 'bg-[#0F172A]/10 border-[#0F172A]/20 group-hover:bg-[#0F172A]/20' : 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'}`}>
-            <service.icon className={`w-8 h-8 group-hover:text-glow ${index < 2 ? 'text-[#0F172A]' : 'text-primary'}`} />
+        <div className="relative h-full bg-black/30 backdrop-blur-sm p-8 rounded-2xl flex flex-col items-start gap-4 border border-white/10 shadow-xl transition-all duration-300">
+          <div className="p-3 rounded-lg transition-colors border bg-white/10 border-white/20 group-hover:bg-white/20">
+            <service.icon className="w-8 h-8 group-hover:text-glow text-accent" />
           </div>
           <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors">
             {service.title}
@@ -70,21 +70,21 @@ export const Services = () => {
     <section id="services" className="py-24 relative z-10 bg-transparent">
       {/* Background Image 2 */}
       <div 
-        className="absolute inset-0 z-[-1] opacity-100"
+        className="absolute inset-0 z-0 opacity-100"
         style={{
-          backgroundImage: "url('/backgroundImage2.png?v=2')",
+          backgroundImage: "none",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       />
       
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 relative z-20">
-          <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A]">
-            Core <span className="text-[#C9A227]">Services</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-white">
+            <span className="glossy-neon-white pb-1">Core</span> <span className="glossy-neon-purple pb-1">Services</span>
           </h2>
-          <p className="text-gray-800 font-medium text-lg mb-8">
+          <p className="text-gray-300 font-medium text-base mb-8">
             Comprehensive cybersecurity services tailored to protect your critical assets against the most sophisticated threats.
           </p>
         </div>

@@ -16,13 +16,16 @@ export const AnimatedBackground = () => {
     canvas.height = height;
 
     let particles = [];
-    const spacing = 32;
+    const spacing = 30; // Space between dots
     let rows = Math.floor(height / spacing) + 4;
     let cols = Math.floor(width / spacing) + 4;
+
+    // We'll create a grid of dots that animate in a wave
     let time = 0;
+    
+    // Mouse interaction
     let mouseX = width / 2;
     let mouseY = height / 2;
-    let animFrame;
 
     const initParticles = () => {
       particles = [];
@@ -30,16 +33,13 @@ export const AnimatedBackground = () => {
       cols = Math.floor(width / spacing) + 4;
       for (let i = -2; i < cols; i++) {
         for (let j = -2; j < rows; j++) {
-          // Assign depth layer: 0=far, 1=mid, 2=near
-          const depth = Math.random();
+          const isGold = Math.random() > 0.3; // 70% gold, 30% purple
           particles.push({
             x: i * spacing,
             y: j * spacing,
             baseX: i * spacing,
             baseY: j * spacing,
-            depth,
-            speed: 0.008 + depth * 0.015,
-            amplitude: 8 + depth * 12,
+            color: isGold ? '#d4af37' : '#c77dff'
           });
         }
       }
@@ -48,47 +48,43 @@ export const AnimatedBackground = () => {
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
-      time += 0.012;
+      
+      time += 0.02;
 
-      particles.forEach((p) => {
+      particles.forEach((p, index) => {
+        // Calculate distance to mouse for interactive effect
         const dx = mouseX - p.baseX;
         const dy = mouseY - p.baseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-
-        const waveX = Math.sin(p.baseY * 0.008 + time + p.depth) * p.amplitude;
-        const waveY = Math.cos(p.baseX * 0.008 + time + p.depth) * (p.amplitude * 0.6);
-
-        const repelRadius = 180;
+        
+        // Wave calculation
+        const waveX = Math.sin(p.baseY * 0.01 + time) * 15;
+        const waveY = Math.cos(p.baseX * 0.01 + time) * 15;
+        
+        // Mouse repel effect
+        const repelRadius = 200;
         const repelForce = Math.max(0, repelRadius - dist) / repelRadius;
-        const repelX = repelForce > 0 ? (dx / (dist || 1)) * -35 * repelForce : 0;
-        const repelY = repelForce > 0 ? (dy / (dist || 1)) * -35 * repelForce : 0;
-
+        const repelX = repelForce > 0 ? (dx / dist) * -40 * repelForce : 0;
+        const repelY = repelForce > 0 ? (dy / dist) * -40 * repelForce : 0;
+        
         p.x = p.baseX + waveX + repelX;
         p.y = p.baseY + waveY + repelY;
 
-        // Depth-based size: far=small, near=large
-        const size = 0.4 + p.depth * 2.2;
-
-        // Opacity also driven by depth for fog-of-depth effect
-        const baseOpacity = 0.06 + p.depth * 0.28;
-        const waveOpacity = Math.sin(p.baseX * 0.015 + time * 0.7) * 0.15;
-        const opacity = Math.max(0.03, baseOpacity + waveOpacity);
-
-        // Color: far particles are dim silver, near are bright gold
-        const goldAmount = p.depth;
-        const r = Math.round(120 + goldAmount * 92);   // 120→212
-        const g = Math.round(110 + goldAmount * 65);   // 110→175
-        const b = Math.round(100 - goldAmount * 82);   // 100→18
-
+        // Size changes based on wave
+        const size = Math.max(0.5, Math.sin(p.baseX * 0.02 + time) * 1.5 + 1.5);
+        
+        // Opacity based on wave
+        const opacity = Math.max(0.1, Math.sin(p.baseY * 0.02 + time) * 0.5 + 0.3);
+        
         ctx.globalAlpha = opacity;
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+
+        ctx.fillStyle = p.color;
         ctx.fill();
       });
 
-      ctx.globalAlpha = 1;
-      animFrame = requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     };
 
     draw();
@@ -100,7 +96,7 @@ export const AnimatedBackground = () => {
       canvas.height = height;
       initParticles();
     };
-
+    
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -108,51 +104,17 @@ export const AnimatedBackground = () => {
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
-
+    
     return () => {
-      cancelAnimationFrame(animFrame);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1]" style={{ background: '#000000' }}>
-      {/* Base vignette gradient for depth */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 80% 70% at 50% 40%, rgba(18,14,4,1) 0%, rgba(0,0,0,1) 100%)',
-        }}
-      />
-
-      {/* Atmospheric gold glow — center depth point */}
-      <div
-        className="absolute"
-        style={{
-          top: '15%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '60vw',
-          height: '40vh',
-          background: 'radial-gradient(ellipse, rgba(212,175,55,0.06) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-        }}
-      />
-
-      {/* Cyber grid — very subtle */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-[0.07]" />
-
-      {/* Depth gradient overlay — top and bottom fade */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%)',
-          pointerEvents: 'none',
-        }}
-      />
-
+    <div className="fixed inset-0 z-[-1] bg-background">
+      <div className="absolute inset-0 bg-cyber-grid opacity-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background opacity-90" />
       <canvas ref={canvasRef} className="absolute inset-0" />
     </div>
   );
