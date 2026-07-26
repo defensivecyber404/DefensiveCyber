@@ -9,8 +9,8 @@ export default {
     extend: {
       colors: {
         background: {
-          DEFAULT: '#06010a', // darker violet
-          darker: '#030005',
+          DEFAULT: '#000000',
+          darker: '#000000',
         },
         primary: {
           DEFAULT: '#d4af37', // gold

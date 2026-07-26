@@ -3,11 +3,7 @@ const router = express.Router();
 
 // Get external news via backend to bypass CORS and Mixed Content issues
 router.get('/external', async (req, res) => {
-  const { apiKey, keywords, limit } = req.query;
-  
-  if (!apiKey) {
-    return res.status(400).json({ error: 'API key is required' });
-  }
+  const { keywords, limit } = req.query;
 
   try {
     // We bypass the limit-ridden API keys entirely and use a free RSS-to-JSON service 

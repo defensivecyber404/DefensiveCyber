@@ -10,6 +10,7 @@ import { BlogPost } from './pages/BlogPost';
 import { FAQPage } from './pages/FAQPage';
 import { AboutPage } from './pages/AboutPage';
 import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
+import { ServiceDetailsPage } from './pages/ServiceDetailsPage';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { AnimatedBackground } from './components/ui/AnimatedBackground';
 import { AuthProvider } from './contexts/AuthContext';
@@ -38,6 +39,7 @@ function App() {
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/legal" element={<PrivacyTermsPage />} />
+            <Route path="/service/:id" element={<ServiceDetailsPage />} />
           </Routes>
 
           <AnimatedBackground />

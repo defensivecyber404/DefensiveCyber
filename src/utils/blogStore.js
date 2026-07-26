@@ -12,11 +12,8 @@ export const fetchPosts = async () => {
 };
 
 export const fetchExternalNews = async (query = 'cybersecurity', max = 6) => {
-  const apiKey = import.meta.env.VITE_GNEWS_API_KEY;
-  if (!apiKey) return [];
-  
   try {
-    const res = await fetch(`${API_URL}/news/external?apiKey=${apiKey}&keywords=${query}&limit=${max}`);
+    const res = await fetch(`${API_URL}/news/external?keywords=${query}&limit=${max}`);
     const data = await res.json();
     if (!res.ok) {
       console.error('Mediastack API Error via Backend:', data);
@@ -138,6 +135,223 @@ export const submitContact = async (contactData) => {
     if (!res.ok) throw new Error(data.error || 'Failed to submit message');
     return data;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchReviews = async () => {
+  try {
+    const res = await fetch(`${API_URL}/reviews`);
+    if (!res.ok) throw new Error('Failed to fetch reviews');
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return [];
+  }
+};
+
+export const createReview = async (reviewData, token) => {
+  try {
+    const res = await fetch(`${API_URL}/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(reviewData)
+    });
+    
+    if (!res.ok) throw new Error('Failed to create review');
+    return await res.json();
+  } catch (error) {
+    console.error('Error creating review:', error);
+    throw error;
+  }
+};
+
+export const updateReview = async (id, reviewData, token) => {
+  try {
+    const res = await fetch(`${API_URL}/reviews/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(reviewData)
+    });
+    
+    if (!res.ok) throw new Error('Failed to update review');
+    return await res.json();
+  } catch (error) {
+    console.error('Error updating review:', error);
+    throw error;
+  }
+};
+
+export const deleteReview = async (id, token) => {
+  try {
+    const res = await fetch(`${API_URL}/reviews/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    
+    if (!res.ok) throw new Error('Failed to delete review');
+    return await res.json();
+  } catch (error) {
+    console.error('Error deleting review:', error);
+    throw error;
+  }
+};
+
+export const fetchClients = async () => {
+  try {
+    const res = await fetch(`${API_URL}/clients`);
+    if (!res.ok) throw new Error('Failed to fetch clients');
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching clients:', error);
+    return [];
+  }
+};
+
+export const createClient = async (clientData, token) => {
+  try {
+    const res = await fetch(`${API_URL}/clients`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(clientData)
+    });
+    
+    if (!res.ok) throw new Error('Failed to create client');
+    return await res.json();
+  } catch (error) {
+    console.error('Error creating client:', error);
+    throw error;
+  }
+};
+
+export const updateClient = async (id, clientData, token) => {
+  try {
+    const res = await fetch(`${API_URL}/clients/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(clientData)
+    });
+    
+    if (!res.ok) throw new Error('Failed to update client');
+    return await res.json();
+  } catch (error) {
+    console.error('Error updating client:', error);
+    throw error;
+  }
+};
+
+export const deleteClient = async (id, token) => {
+  try {
+    const res = await fetch(`${API_URL}/clients/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    
+    if (!res.ok) throw new Error('Failed to delete client');
+    return await res.json();
+  } catch (error) {
+    console.error('Error deleting client:', error);
+    throw error;
+  }
+};
+
+// --- SERVICES API ---
+
+export const fetchServices = async () => {
+  try {
+    const res = await fetch(`${API_URL}/services`);
+    if (!res.ok) throw new Error('Failed to fetch services');
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching services:', error);
+    return [];
+  }
+};
+
+export const fetchServiceById = async (id) => {
+  try {
+    const res = await fetch(`${API_URL}/services/${id}`);
+    if (!res.ok) throw new Error('Failed to fetch service');
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching service:', error);
+    return null;
+  }
+};
+
+export const createService = async (data, token) => {
+  try {
+    const res = await fetch(`${API_URL}/services`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'Failed to create service');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error creating service:', error);
+    throw error;
+  }
+};
+
+export const updateService = async (id, data, token) => {
+  try {
+    const res = await fetch(`${API_URL}/services/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'Failed to update service');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error updating service:', error);
+    throw error;
+  }
+};
+
+export const deleteService = async (id, token) => {
+  try {
+    const res = await fetch(`${API_URL}/services/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'Failed to delete service');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error deleting service:', error);
     throw error;
   }
 };

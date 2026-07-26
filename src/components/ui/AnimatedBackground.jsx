@@ -112,10 +112,16 @@ export const AnimatedBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-1] bg-background">
-      <div className="absolute inset-0 bg-cyber-grid opacity-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background opacity-90" />
-      <canvas ref={canvasRef} className="absolute inset-0" />
+    <div className="fixed inset-0 z-[-1] bg-black">
+      {/* Deep purple glow in the center fading into pure blackish shade on the sides */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at top center, rgba(90, 20, 150, 0.3) 0%, rgba(15, 5, 25, 0.5) 30%, rgba(0, 0, 0, 1) 60%)'
+        }}
+      />
+      <div className="absolute inset-0 bg-cyber-grid opacity-[0.05]" />
+      <canvas ref={canvasRef} className="absolute inset-0 opacity-80" />
     </div>
   );
 };

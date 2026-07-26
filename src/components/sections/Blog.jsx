@@ -20,7 +20,28 @@ export const Blog = () => {
           newsPost = extNews[0]; // Override with external news if available
         }
 
-        setPosts([newsPost, blogPost].filter(Boolean));
+        // Fallbacks to prevent UI from breaking if API/Backend fails
+        if (!newsPost) {
+          newsPost = {
+            id: 'fallback-news',
+            type: 'news',
+            title: 'Critical Infrastructure Under Attack',
+            excerpt: 'Recent reports indicate a surge in coordinated attacks against critical infrastructure sectors globally, prompting new security mandates.',
+            isExternal: false
+          };
+        }
+        
+        if (!blogPost) {
+          blogPost = {
+            id: 'fallback-blog',
+            type: 'blog',
+            title: 'Zero Trust: Beyond the Buzzword',
+            excerpt: 'Understanding the core principles of Zero Trust Architecture and practical steps to implement it within your enterprise network.',
+            isExternal: false
+          };
+        }
+
+        setPosts([newsPost, blogPost]);
       } catch (err) {
         console.error('Failed to load homepage posts', err);
       }
@@ -71,9 +92,12 @@ export const Blog = () => {
                   {post.type}
                 </h3>
                 <motion.div
-                  className="group flex flex-col flex-grow rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-xl bg-black/30 backdrop-blur-sm"
+                  className="group flex flex-col flex-grow rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-xl bg-black/30 backdrop-blur-sm relative"
                 >
-                  <div className="p-8 flex flex-col flex-grow text-center min-w-0 w-full">
+                  {/* Subtle center purple glow */}
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(90,20,150,0.2) 0%, transparent 60%)' }} />
+                  
+                  <div className="relative z-10 p-8 flex flex-col flex-grow text-center min-w-0 w-full">
                     <h3 className="text-xl font-bold font-space text-gray-900 dark:text-white group-hover:text-primary transition-colors mb-3 break-all break-words">
                       {post.title}
                     </h3>

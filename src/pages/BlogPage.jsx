@@ -96,8 +96,10 @@ export const BlogPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group bg-black/40 backdrop-blur-xl flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-2xl relative"
+              className="group flex flex-col h-full rounded-2xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 border border-white/10 shadow-xl bg-black/30 backdrop-blur-sm relative"
             >
+              {/* Subtle center purple glow */}
+              <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(90,20,150,0.2) 0%, transparent 60%)' }} />
               {isAuthenticated && (
                 <div className="absolute top-4 right-4 z-20 flex gap-2">
                   <button 
@@ -115,7 +117,7 @@ export const BlogPage = () => {
                 </div>
               )}
 
-              <div className="p-8 flex flex-col flex-grow text-left min-w-0 w-full">
+              <div className="relative z-10 p-8 flex flex-col flex-grow text-left min-w-0 w-full">
                 <h3 className="text-xl font-bold font-space text-white group-hover:text-primary transition-colors mb-4 drop-shadow-sm pr-16 break-all break-words">
                   {post.title}
                 </h3>

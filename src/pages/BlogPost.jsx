@@ -60,9 +60,12 @@ export const BlogPost = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-black/40 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl"
+            className="relative overflow-hidden bg-black/30 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/10 shadow-xl"
           >
-            <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8 pb-8 border-b border-gray-900/20">
+            {/* Subtle center purple glow */}
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(90,20,150,0.2) 0%, transparent 60%)' }} />
+            
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-4 mb-8 pb-8 border-b border-gray-900/20">
               <span className={`inline-flex px-4 py-1.5 text-sm font-bold uppercase tracking-wider rounded-full items-center justify-center gap-2 w-max ${
                 post.type === 'news' 
                   ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' 
