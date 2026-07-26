@@ -69,7 +69,7 @@ export const PrivacyTermsPage = () => {
   ];
 
   return (
-    <main className="pt-32 pb-24 relative min-h-screen bg-[#030014] text-white overflow-hidden">
+    <main className="pt-32 pb-24 relative min-h-screen bg-transparent text-white overflow-hidden">
       
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
