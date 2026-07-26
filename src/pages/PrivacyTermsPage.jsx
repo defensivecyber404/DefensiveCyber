@@ -93,12 +93,12 @@ export const PrivacyTermsPage = () => {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-sm font-space text-primary tracking-[0.2em] mb-4 uppercase">Terms & Conditions</h1>
-            <h3 
-              className="text-2xl md:text-4xl lg:text-[2.5rem] leading-tight font-black uppercase text-white mb-6"
+            <h1 
+              className="text-2xl md:text-4xl lg:text-[2.5rem] leading-tight font-black uppercase mb-6"
               style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
             >
-              DEFENSIVE CYBER <span className="text-[#c77dff]">CONSULTING SERVICES</span>
-            </h3>
+              <span className="glossy-neon-purple pb-1">DEFENSIVE CYBER CONSULTING SERVICES</span>
+            </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-primary to-[#c77dff] mx-auto rounded-full" />
           </motion.div>
         </div>
