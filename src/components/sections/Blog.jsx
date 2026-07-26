@@ -12,7 +12,7 @@ export const Blog = () => {
       try {
         const allPosts = await fetchPosts();
         let newsPost = allPosts.find(p => p.type === 'news');
-        const blogPost = allPosts.find(p => p.type === 'blog');
+        let blogPost = allPosts.find(p => p.type === 'blog');
 
         // Fetch external news to feature on homepage
         const extNews = await fetchExternalNews('cybersecurity', 1);
