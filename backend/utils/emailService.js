@@ -6,6 +6,7 @@ const sendContactEmail = async (contactData) => {
       host: 'smtp.gmail.com',
       port: 587,
       secure: false, // upgrades to TLS using STARTTLS
+      family: 4, // force IPv4 to prevent Vercel ENETUNREACH IPv6 routing errors
       auth: {
         user: process.env.EMAIL_USER || 'defensivecyber404@gmail.com',
         pass: process.env.EMAIL_PASS || 'rucpcfloypxybxqp'
