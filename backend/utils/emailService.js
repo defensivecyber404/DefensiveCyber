@@ -5,14 +5,17 @@ const sendContactEmail = async (contactData) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+        user: process.env.EMAIL_USER || 'defensivecyber404@gmail.com',
+        pass: process.env.EMAIL_PASS || 'rucpcfloypxybxqp'
+      },
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 5000
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
+      from: process.env.EMAIL_USER || 'defensivecyber404@gmail.com',
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || 'defensivecyber404@gmail.com',
       subject: `New Contact Request: ${contactData.service || 'General Inquiry'}`,
       html: `
         <h2>New Contact Request</h2>
@@ -29,6 +32,7 @@ const sendContactEmail = async (contactData) => {
     console.log('Contact email sent successfully:', info.messageId);
   } catch (error) {
     console.error('Error sending contact email:', error);
+    throw error;
   }
 };
 
