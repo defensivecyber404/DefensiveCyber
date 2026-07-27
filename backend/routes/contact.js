@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
 
     const newContact = await Contact.create({ name, email, service, message });
     
-    // Send email notification asynchronously
-    sendContactEmail({ name, email, service, message });
+    // Send email notification synchronously to prevent Vercel from freezing the process
+    await sendContactEmail({ name, email, service, message });
     
     res.status(201).json({ success: true, message: 'Message received' });
   } catch (err) {
