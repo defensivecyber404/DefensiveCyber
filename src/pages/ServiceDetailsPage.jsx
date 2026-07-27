@@ -56,7 +56,7 @@ export const ServiceDetailsPage = () => {
             e.preventDefault();
             navigate(-1);
           }}
-          className="relative z-50 mt-12 mb-8 cursor-pointer inline-flex items-center text-sm font-bold text-white hover:text-primary transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] px-5 py-2 rounded-full"
+          className="relative z-[60] mt-12 mb-8 cursor-pointer inline-flex items-center text-sm font-bold text-white hover:text-primary transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] px-5 py-2 rounded-full"
         >
           <Icons.ArrowLeft className="w-4 h-4 mr-2" />
           Back
