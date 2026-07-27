@@ -7,8 +7,8 @@ const initDB = async () => {
   try {
     const mongoURI = process.env.MONGO_URI;
     if (!mongoURI) {
-      console.error('MONGO_URI is not defined in .env');
-      process.exit(1);
+      console.error('MONGO_URI is not defined in .env or Vercel Environment Variables');
+      return; // Do not crash the entire function, just let the routes handle the disconnected state
     }
 
     await mongoose.connect(mongoURI);
@@ -47,7 +47,7 @@ const initDB = async () => {
     }
   } catch (err) {
     console.error('MongoDB connection error:', err);
-    process.exit(1);
+    // process.exit(1); // Do not crash
   }
 };
 

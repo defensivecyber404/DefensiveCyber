@@ -14,6 +14,11 @@ router.post('/', async (req, res) => {
   }
 
   try {
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(500).json({ error: 'Database is not connected. Please ensure MONGO_URI is set correctly in Vercel Environment Variables.' });
+    }
+
     const newContact = await Contact.create({ name, email, service, message });
     
     // Send email notification asynchronously
