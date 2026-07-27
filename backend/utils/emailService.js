@@ -1,17 +1,32 @@
+const nodemailer = require('nodemailer');
+
 const sendContactEmail = async (contactData) => {
   try {
-    // We send this to the Vercel Serverless Function to bypass Render's strict SMTP block on free tier!
-    const response = await fetch('https://defensive-cyber-czzx.vercel.app/api/sendEmail', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(contactData)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
     });
-    
-    if (response.ok) {
-      console.log('Contact email sent successfully via Vercel Relay.');
-    } else {
-      console.error('Failed to send email via Vercel Relay');
-    }
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
+      subject: `New Contact Request: ${contactData.service || 'General Inquiry'}`,
+      html: `
+        <h2>New Contact Request</h2>
+        <p><strong>Name:</strong> ${contactData.name || 'N/A'}</p>
+        <p><strong>Email:</strong> ${contactData.email}</p>
+        <p><strong>Service of Interest:</strong> ${contactData.service || 'N/A'}</p>
+        <br/>
+        <h3>Message:</h3>
+        <p>${contactData.message}</p>
+      `
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Contact email sent successfully:', info.messageId);
   } catch (error) {
     console.error('Error sending contact email:', error);
   }

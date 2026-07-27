@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchPosts, fetchExternalNews } from '../../utils/blogStore';
+import { fetchPosts, fetchExternalNews, defaultPosts } from '../../utils/blogStore';
 import { Calendar, ArrowRight, BookOpen, Radio } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Blog = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(defaultPosts);
 
   useEffect(() => {
     const loadHomepagePosts = async () => {
@@ -15,35 +15,28 @@ export const Blog = () => {
         let blogPost = allPosts.find(p => p.type === 'blog');
 
         // Fetch external news to feature on homepage
-        const extNews = await fetchExternalNews('cybersecurity', 1);
-        if (extNews && extNews.length > 0) {
-          newsPost = extNews[0]; // Override with external news if available
+        try {
+          const extNews = await fetchExternalNews('cybersecurity', 1);
+          if (extNews && extNews.length > 0) {
+            newsPost = extNews[0]; // Override with external news if available
+          }
+        } catch (e) {
+          console.error('Failed to load external news', e);
         }
 
         // Fallbacks to prevent UI from breaking if API/Backend fails
         if (!newsPost) {
-          newsPost = {
-            id: 'fallback-news',
-            type: 'news',
-            title: 'Critical Infrastructure Under Attack',
-            excerpt: 'Recent reports indicate a surge in coordinated attacks against critical infrastructure sectors globally, prompting new security mandates.',
-            isExternal: false
-          };
+          newsPost = defaultPosts[0];
         }
         
         if (!blogPost) {
-          blogPost = {
-            id: 'fallback-blog',
-            type: 'blog',
-            title: 'Zero Trust: Beyond the Buzzword',
-            excerpt: 'Understanding the core principles of Zero Trust Architecture and practical steps to implement it within your enterprise network.',
-            isExternal: false
-          };
+          blogPost = defaultPosts[1];
         }
 
         setPosts([newsPost, blogPost]);
       } catch (err) {
         console.error('Failed to load homepage posts', err);
+        setPosts(defaultPosts);
       }
     };
     

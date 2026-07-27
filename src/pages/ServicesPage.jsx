@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Icons from 'lucide-react';
-import { fetchServices, deleteService } from '../utils/blogStore';
+import { fetchServices, deleteService, defaultServices } from '../utils/blogStore';
 import { useAuth } from '../contexts/AuthContext';
 import { ServiceFormModal } from '../components/admin/ServiceFormModal';
 
@@ -97,7 +97,7 @@ const ServiceCard = ({ service, index, isAuthenticated, onEdit, onDelete }) => {
 export const ServicesPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, token } = useAuth();
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState(defaultServices);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingService, setEditingService] = useState(null);
 
