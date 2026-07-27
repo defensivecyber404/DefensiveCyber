@@ -1,12 +1,21 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns');
+const { promisify } = require('util');
+const lookup = promisify(dns.lookup);
 
 const sendContactEmail = async (contactData) => {
   try {
+    // Manually force IPv4 resolution to bypass Vercel IPv6 ENETUNREACH bug
+    const { address } = await lookup('smtp.gmail.com', { family: 4 });
+
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: address,
       port: 587,
       secure: false, // upgrades to TLS using STARTTLS
-      family: 4, // force IPv4 to prevent Vercel ENETUNREACH IPv6 routing errors
+      tls: {
+        servername: 'smtp.gmail.com',
+        rejectUnauthorized: false
+      },
       auth: {
         user: process.env.EMAIL_USER || 'defensivecyber404@gmail.com',
         pass: process.env.EMAIL_PASS || 'rucpcfloypxybxqp'
