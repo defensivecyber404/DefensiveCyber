@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export const defaultServices = [
   {
@@ -408,6 +408,45 @@ export const deleteService = async (id, token) => {
     return await res.json();
   } catch (error) {
     console.error('Error deleting service:', error);
+    throw error;
+  }
+};
+
+// --- COMPANY INFO API ---
+
+export const fetchCompanyInfo = async () => {
+  try {
+    const res = await fetch(`${API_URL}/company-info`);
+    if (!res.ok) throw new Error('Failed to fetch company info');
+    return await res.json();
+  } catch (error) {
+    console.error('Error fetching company info:', error);
+    // Return a default structure so frontend doesn't break
+    return {
+      emails: ['defensivecyber404@gmail.com'],
+      phones: ['+91 99716 24200'],
+      locations: ['New Delhi, India']
+    };
+  }
+};
+
+export const updateCompanyInfo = async (data, token) => {
+  try {
+    const res = await fetch(`${API_URL}/company-info`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'Failed to update company info');
+    }
+    return await res.json();
+  } catch (error) {
+    console.error('Error updating company info:', error);
     throw error;
   }
 };

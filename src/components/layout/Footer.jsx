@@ -1,8 +1,23 @@
-import React from 'react';
-import { Shield, Mail, MapPin, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Shield, Mail, MapPin, Phone, Edit } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { fetchCompanyInfo } from '../../utils/blogStore';
+import { CompanyInfoModal } from '../admin/CompanyInfoModal';
 
 export const Footer = () => {
+  const { isAuthenticated } = useAuth();
+  const [companyInfo, setCompanyInfo] = useState({ locations: [], phones: [], emails: [] });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      const data = await fetchCompanyInfo();
+      setCompanyInfo(data);
+    };
+    loadInfo();
+  }, []);
+
   return (
     <footer className="bg-[#080312] border-t border-white/10 pt-16 pb-8 relative overflow-hidden">
       {/* Background glow */}
@@ -84,20 +99,36 @@ export const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-space font-semibold text-white mb-6 uppercase tracking-wider text-sm">Contact Info</h4>
+            <div className="flex items-center justify-between mb-6">
+              <h4 className="font-space font-semibold text-white uppercase tracking-wider text-sm">Contact Info</h4>
+              {isAuthenticated && (
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1 text-xs bg-primary/10 px-2 py-1 rounded-md"
+                >
+                  <Edit className="w-3 h-3" /> Edit
+                </button>
+              )}
+            </div>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-white/70">
-                <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span>New Delhi, India</span>
-              </li>
-              <li className="flex items-center gap-3 text-sm text-white/70">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span>+91 99716 24200</span>
-              </li>
-              <li className="flex items-center gap-3 text-sm text-white/70">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>defensivecyber404@gmail.com</span>
-              </li>
+              {companyInfo.locations?.map((loc, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-white/70">
+                  <MapPin className="w-5 h-5 text-primary shrink-0" />
+                  <span>{loc}</span>
+                </li>
+              ))}
+              {companyInfo.phones?.map((phone, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm text-white/70">
+                  <Phone className="w-5 h-5 text-primary shrink-0" />
+                  <span>{phone}</span>
+                </li>
+              ))}
+              {companyInfo.emails?.map((email, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm text-white/70">
+                  <Mail className="w-5 h-5 text-primary shrink-0" />
+                  <span>{email}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -112,6 +143,13 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+
+      <CompanyInfoModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        companyInfo={companyInfo}
+        onSaveSuccess={(newInfo) => setCompanyInfo(newInfo)}
+      />
     </footer>
   );
 };

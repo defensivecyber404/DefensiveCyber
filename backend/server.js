@@ -13,6 +13,7 @@ const faqRoutes = require('./routes/faqs');
 const reviewsRoutes = require('./routes/reviews');
 const clientsRoutes = require('./routes/clients');
 const servicesRoutes = require('./routes/services');
+const companyInfoRoutes = require('./routes/companyInfo');
 const initDB = require('./database');
 
 const app = express();
@@ -48,6 +49,7 @@ app.use('/api/faqs', faqRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/clients', clientsRoutes);
 app.use('/api/services', servicesRoutes);
+app.use('/api/company-info', companyInfoRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
