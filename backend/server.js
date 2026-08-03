@@ -57,10 +57,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
-  app.listen(PORT, () => {
-    console.log(`Backend server running on port ${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
+});
 
 module.exports = app;
