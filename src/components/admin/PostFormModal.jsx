@@ -38,6 +38,17 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
     }
   }, [isOpen, initialData, type]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,

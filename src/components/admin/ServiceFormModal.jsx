@@ -43,6 +43,17 @@ export const ServiceFormModal = ({ isOpen, onClose, onSuccess, initialData }) =>
     }
   }, [isOpen, initialData]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,

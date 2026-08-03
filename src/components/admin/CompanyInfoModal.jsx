@@ -24,6 +24,17 @@ export const CompanyInfoModal = ({ isOpen, onClose, companyInfo, onSaveSuccess }
     }
   }, [isOpen, companyInfo]);
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleArrayChange = (field, index, value) => {

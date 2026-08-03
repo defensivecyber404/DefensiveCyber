@@ -29,6 +29,17 @@ export const ReviewFormModal = ({ isOpen, onClose, onSuccess, initialData }) => 
     }
   }, [isOpen, initialData]);
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
