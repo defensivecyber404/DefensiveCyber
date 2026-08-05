@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Hero } from '../components/sections/Hero';
 import { Services } from '../components/sections/Services';
 import { Blog } from '../components/sections/Blog';
@@ -47,6 +48,11 @@ export const Home = () => {
   }, []);
   return (
     <main>
+      <Helmet>
+        <title>Defensive Cyber - Premier Cybersecurity & Penetration Testing Services</title>
+        <meta name="description" content="Defensive Cyber provides top-tier penetration testing, vulnerability assessments, and cybersecurity consulting to protect your business." />
+        <meta name="keywords" content="Cybersecurity, Penetration Testing, VAPT, Cyber Defense, Security Audit" />
+      </Helmet>
       <Hero />
       <Services />
       <div className="relative -mt-[1px]">

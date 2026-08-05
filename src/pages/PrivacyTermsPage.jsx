@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Shield, CheckCircle, Lock, Cpu, Globe, FileText, AlertTriangle, Scale, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -70,6 +71,10 @@ export const PrivacyTermsPage = () => {
 
   return (
     <main className="pt-32 pb-24 relative min-h-screen bg-transparent text-white overflow-hidden">
+      <Helmet>
+        <title>Privacy Policy & Terms | Defensive Cyber</title>
+        <meta name="description" content="Read the Privacy Policy and Terms & Conditions for Defensive Cyber Consulting Services." />
+      </Helmet>
       
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
@@ -92,7 +97,7 @@ export const PrivacyTermsPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-sm font-space text-primary tracking-[0.2em] mb-4 uppercase">Terms & Conditions</h1>
+            <h2 className="text-sm font-space text-primary tracking-[0.2em] mb-4 uppercase">Terms & Conditions</h2>
             <h1 
               className="text-2xl md:text-4xl lg:text-[2.5rem] leading-tight font-black uppercase mb-6"
               style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}

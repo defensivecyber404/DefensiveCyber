@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { fetchPosts, deletePost } from '../utils/blogStore';
 import { ArrowRight, ArrowLeft, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '../contexts/AuthContext';
 import { PostFormModal } from '../components/admin/PostFormModal';
 
@@ -47,7 +48,10 @@ export const BlogPage = () => {
 
   return (
     <main className="pt-24 pb-24 relative min-h-screen text-gray-900">
-      
+      <Helmet>
+        <title>Cybersecurity Blog | Insights & Threat Intel - Defensive Cyber</title>
+        <meta name="description" content="Stay updated with the latest in cybersecurity, penetration testing, malware analysis, and threat intelligence from Defensive Cyber experts." />
+      </Helmet>
       
       <div className="container mx-auto px-6 relative z-10">
         <button 

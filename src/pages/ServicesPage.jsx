@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import * as Icons from 'lucide-react';
 import { fetchServices, deleteService, defaultServices } from '../utils/blogStore';
 import { useAuth } from '../contexts/AuthContext';
@@ -123,6 +124,10 @@ export const ServicesPage = () => {
 
   return (
     <main className="pt-24 pb-24 relative min-h-screen bg-[#F8F5EF] dark:bg-gray-950">
+      <Helmet>
+        <title>Cybersecurity Services | Penetration Testing & VAPT - Defensive Cyber</title>
+        <meta name="description" content="Explore our complete suite of advanced cybersecurity solutions, including penetration testing, vulnerability assessments, and managed security services." />
+      </Helmet>
       <div className="container mx-auto px-6 relative z-10">
         <button 
           onClick={(e) => {
@@ -144,7 +149,7 @@ export const ServicesPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-extrabold font-sans tracking-tight mb-6 text-[#0F172A] dark:text-white"
           >
-            All <span className="glossy-neon-white pb-1">Core</span> <span className="glossy-neon-purple pb-1">Services</span>
+            All <span className="glossy-neon-white pb-1">Cybersecurity</span> <span className="glossy-neon-purple pb-1">Services</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

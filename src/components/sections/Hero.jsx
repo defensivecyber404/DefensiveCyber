@@ -124,7 +124,7 @@ export const Hero = () => {
 
             <h1 className="mb-6 flex flex-col gap-1">
               <span className="text-sm md:text-base font-serif uppercase tracking-[0.3em] text-gray-200 mb-2 font-semibold">
-                The Art of
+                Premier Cybersecurity &
               </span>
               <span className="text-6xl md:text-8xl font-serif font-bold leading-tight tracking-tight glossy-neon-white pb-1">
                 Digital

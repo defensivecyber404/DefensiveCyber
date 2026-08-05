@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 export const AboutPage = () => {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ export const AboutPage = () => {
 
   return (
     <main className="pt-48 pb-24 relative min-h-screen bg-transparent text-white">
+      <Helmet>
+        <title>About Us | Defensive Cyber - Cybersecurity Experts</title>
+        <meta name="description" content="Learn about Defensive Cyber, a team of cybersecurity experts dedicated to protecting your organization from advanced threats and vulnerabilities." />
+      </Helmet>
       
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
         <div className="mb-8">
@@ -37,7 +42,7 @@ export const AboutPage = () => {
             
             <section className="bg-black/40 backdrop-blur-xl p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl">
               <h2 className="text-xl md:text-2xl font-normal tracking-wide text-white mb-6" style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}>
-                Defending What Matters Most
+                Cybersecurity: Defending What Matters Most
               </h2>
               <div className="space-y-4">
                 <p>
