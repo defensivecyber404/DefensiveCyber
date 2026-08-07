@@ -143,7 +143,7 @@ export const Services = () => {
             <span className="glossy-neon-white pb-1">Core</span> <span className="glossy-neon-purple pb-1">Services</span>
           </h2>
           <p className="text-gray-300 font-medium text-base mb-8">
-            Comprehensive cybersecurity services tailored to protect your critical assets against the most sophisticated threats.
+            Comprehensive <strong className="text-white">cybersecurity services</strong>, including <strong className="text-white">penetration testing (VAPT)</strong>, <strong className="text-white">network security monitoring</strong>, and <strong className="text-white">compliance audits</strong>, tailored to protect your critical assets against the most sophisticated threats.
           </p>
 
           {isAuthenticated && (

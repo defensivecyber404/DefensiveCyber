@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const Parser = require('rss-parser');
+const parser = new Parser();
 
 // Get external news via backend to bypass CORS and Mixed Content issues
 router.get('/external', async (req, res) => {
@@ -34,6 +36,35 @@ router.get('/external', async (req, res) => {
   } catch (err) {
     console.error('Proxy Error:', err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Get CISA News natively via fetch and rss-parser
+router.get('/cisa', async (req, res) => {
+  const { limit } = req.query;
+  try {
+    const response = await fetch('https://www.cisa.gov/cybersecurity-advisories/all.xml', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0'
+      }
+    });
+    const xmlText = await response.text();
+    const feed = await parser.parseString(xmlText);
+    const items = feed.items.slice(0, parseInt(limit) || 30);
+    const formattedData = {
+      data: items.map(article => ({
+        title: article.title,
+        description: (article.contentSnippet || article.content || '').replace(/<[^>]*>?/gm, '').substring(0, 150) + '...',
+        published_at: article.pubDate,
+        url: article.link,
+        image: 'https://www.cisa.gov/profiles/cisagov/themes/custom/gesso/images/favicon/apple-touch-icon.png',
+        source: 'CISA'
+      }))
+    };
+    res.json(formattedData);
+  } catch (err) {
+    console.error('CISA RSS Error:', err);
+    res.status(500).json({ error: 'Failed to fetch CISA feed' });
   }
 });
 

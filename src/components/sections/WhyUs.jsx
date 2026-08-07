@@ -3,10 +3,10 @@ import { motion, useInView } from 'framer-motion';
 import { Target, Users, ThumbsUp, Clock } from 'lucide-react';
 
 const stats = [
-  { label: 'Security Assessments', value: 100, suffix: '+', icon: Target },
-  { label: 'Clients Secured', value: 10, suffix: '+', icon: Users },
+  { label: 'Vulnerability Assessments', value: 100, suffix: '+', icon: Target },
+  { label: 'Networks Secured', value: 10, suffix: '+', icon: Users },
   { label: 'Client Satisfaction', value: 99, suffix: '%', icon: ThumbsUp },
-  { label: 'Security Support', value: 24, suffix: '/7', icon: Clock },
+  { label: 'SOC Support', value: 24, suffix: '/7', icon: Clock },
 ];
 
 const Counter = ({ value, suffix }) => {

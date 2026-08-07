@@ -42,6 +42,8 @@ export const defaultPosts = [
     type: 'news',
     title: 'Critical Infrastructure Under Attack',
     excerpt: 'Recent reports indicate a surge in coordinated attacks against critical infrastructure sectors globally, prompting new security mandates.',
+    content: 'Recent reports indicate a surge in coordinated attacks against critical infrastructure sectors globally, prompting new security mandates.\n\nOrganizations are advised to immediately review their security posture, patch vulnerable edge devices, and enforce strict access controls to prevent unauthorized access to operational technology environments.',
+    date: new Date().toISOString(),
     isExternal: false
   },
   {
@@ -50,6 +52,8 @@ export const defaultPosts = [
     type: 'blog',
     title: 'Zero Trust: Beyond the Buzzword',
     excerpt: 'Understanding the core principles of Zero Trust Architecture and practical steps to implement it within your enterprise network.',
+    content: 'Understanding the core principles of Zero Trust Architecture and practical steps to implement it within your enterprise network.\n\nZero Trust is not a single product, but a strategic approach to cybersecurity that secures an organization by eliminating implicit trust and continuously validating every stage of a digital interaction. This post explores how identity verification, device health, and micro-segmentation work together to build a robust defense.',
+    date: new Date().toISOString(),
     isExternal: false
   }
 ];
@@ -66,28 +70,65 @@ export const fetchPosts = async () => {
   }
 };
 
-export const fetchExternalNews = async (query = 'cybersecurity', max = 6) => {
+export const fetchExternalNews = async (keywords = 'cybersecurity', limit = 6) => {
   try {
-    const res = await fetch(`${API_URL}/news/external?keywords=${query}&limit=${max}`);
+    const res = await fetch(`${API_URL}/news/external?keywords=${keywords}&limit=${limit}`);
+    if (!res.ok) throw new Error('Failed to fetch external news');
     const data = await res.json();
-    if (!res.ok) {
-      console.error('Mediastack API Error via Backend:', data);
-      throw new Error(data.error?.message || 'Failed to fetch external news');
-    }
     
+    // Check if we got valid data back
+    if (!data || !data.data || !Array.isArray(data.data)) {
+      console.warn('Invalid response from external news proxy:', data);
+      return [];
+    }
+
+    // Map mediastack/proxy response to our post format
     return data.data.map((article, index) => ({
-      id: `ext-${index}-${Date.now()}`,
-      title: article.title,
-      excerpt: article.description || 'Read more about this story at the source.',
-      content: article.description || '',
+      _id: `ext-${Date.now()}-${index}`,
+      id: `ext-${Date.now()}-${index}`,
       type: 'news',
-      created_at: article.published_at,
+      title: article.title,
+      excerpt: article.description,
+      content: article.description,
+      author: article.source || 'The Hacker News',
+      date: article.published_at,
+      image: article.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80',
       isExternal: true,
       url: article.url,
-      image: article.image
+      source: 'The Hacker News'
     }));
   } catch (error) {
     console.error('Error fetching external news:', error);
+    return [];
+  }
+};
+
+export const fetchCisaNews = async (limit = 6) => {
+  try {
+    const res = await fetch(`${API_URL}/news/cisa?limit=${limit}`);
+    if (!res.ok) throw new Error('Failed to fetch CISA news');
+    const data = await res.json();
+    
+    if (!data || !data.data || !Array.isArray(data.data)) {
+      return [];
+    }
+
+    return data.data.map((article, index) => ({
+      _id: `cisa-${Date.now()}-${index}`,
+      id: `cisa-${Date.now()}-${index}`,
+      type: 'news',
+      title: article.title,
+      excerpt: article.description,
+      content: article.description,
+      author: 'CISA',
+      date: article.published_at,
+      image: article.image,
+      isExternal: true,
+      url: article.url,
+      source: 'CISA'
+    }));
+  } catch (error) {
+    console.error('Error fetching CISA news:', error);
     return [];
   }
 };

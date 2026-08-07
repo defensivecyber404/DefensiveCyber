@@ -46,10 +46,10 @@ export const AboutPage = () => {
               </h2>
               <div className="space-y-4">
                 <p>
-                  In today's digital world, a single cyber incident can disrupt operations, damage reputations, and compromise years of hard work. At <strong className="text-white">Defensive Cyber</strong>, we help organizations stay prepared, resilient, and secure against an ever-changing threat landscape.
+                  In today's digital world, a single cyber incident can disrupt operations, damage reputations, and compromise years of hard work. At <strong className="text-white">Defensive Cyber</strong>, we help organizations stay prepared, resilient, and secure against an ever-changing threat landscape through comprehensive <strong className="text-white">penetration testing</strong>, <strong className="text-white">vulnerability assessments</strong>, and advanced <strong className="text-white">cyber defense strategies</strong>.
                 </p>
                 <p>
-                  Built on years of hands-on experience in enterprise cybersecurity, our approach combines technical expertise with practical, business-focused solutions. We don't believe in one-size-fits-all security. Every organization has different challenges, and we work closely with our clients to understand their environment, identify potential risks, and implement strategies that truly make a difference.
+                  Built on years of hands-on experience in enterprise cybersecurity, our approach combines technical expertise with practical, business-focused solutions. We don't believe in one-size-fits-all security. Every organization faces unique challenges, whether it's achieving regulatory <strong className="text-white">compliance</strong>, securing cloud infrastructure, or requiring <strong className="text-white">managed security services (MSSP)</strong>. We work closely with our clients to understand their environment, identify potential risks, and implement strategies that truly make a difference.
                 </p>
                 <p>
                   Whether it's responding to a security incident, uncovering the source of an attack, analyzing sophisticated malware, or providing actionable cyber threat intelligence, our goal is simple—to help businesses operate with confidence in a secure digital environment.

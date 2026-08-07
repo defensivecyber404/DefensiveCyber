@@ -77,11 +77,11 @@ export const BlogPost = () => {
               
               <div className="flex items-center text-gray-300 text-sm drop-shadow-sm">
                 <Calendar className="w-4 h-4 mr-2" />
-                {new Date(post.date).toLocaleDateString(undefined, {
+                {post.date ? new Date(post.date).toLocaleDateString(undefined, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
-                })}
+                }) : 'Recently Published'}
               </div>
             </div>
 
@@ -91,7 +91,7 @@ export const BlogPost = () => {
 
             <div className="prose prose-lg prose-invert max-w-none text-gray-200 leading-relaxed drop-shadow-sm">
               {/* Splitting content by newlines to render paragraphs */}
-              {post.content.split('\n').map((paragraph, idx) => (
+              {(post.content || post.excerpt || '').split('\n').map((paragraph, idx) => (
                 <p key={idx} className="mb-6 break-words whitespace-pre-wrap">{paragraph}</p>
               ))}
             </div>

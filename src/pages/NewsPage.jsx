@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchPosts, deletePost, fetchExternalNews } from '../utils/blogStore';
+import { fetchPosts, deletePost, fetchCisaNews } from '../utils/blogStore';
 import { ArrowRight, ArrowLeft, PlusCircle, Edit, Trash2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -18,11 +18,11 @@ export const NewsPage = () => {
   const loadPosts = async () => {
     try {
       const dbPosts = await fetchPosts();
-      const extNews = await fetchExternalNews('cybersecurity', 6);
+      const cisaNews = await fetchCisaNews(30);
       
       const newsFromDb = dbPosts.filter(p => p.type === 'news');
       // Sort combined array by date descending
-      const combinedNews = [...newsFromDb, ...extNews].sort((a, b) => {
+      const combinedNews = [...newsFromDb, ...cisaNews].sort((a, b) => {
         const dateA = new Date(a.created_at || a.date || 0).getTime();
         const dateB = new Date(b.created_at || b.date || 0).getTime();
         return dateB - dateA;

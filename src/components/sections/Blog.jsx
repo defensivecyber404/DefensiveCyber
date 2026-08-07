@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { fetchPosts, fetchExternalNews, defaultPosts } from '../../utils/blogStore';
+import { fetchPosts, fetchCisaNews, defaultPosts } from '../../utils/blogStore';
 import { Calendar, ArrowRight, BookOpen, Radio } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -14,14 +14,14 @@ export const Blog = () => {
         let newsPost = allPosts.find(p => p.type === 'news');
         let blogPost = allPosts.find(p => p.type === 'blog');
 
-        // Fetch external news to feature on homepage
+        // Fetch CISA news to feature on homepage
         try {
-          const extNews = await fetchExternalNews('cybersecurity', 1);
-          if (extNews && extNews.length > 0) {
-            newsPost = extNews[0]; // Override with external news if available
+          const cisaNews = await fetchCisaNews(1);
+          if (cisaNews && cisaNews.length > 0) {
+            newsPost = cisaNews[0]; // Override with CISA news if available
           }
         } catch (e) {
-          console.error('Failed to load external news', e);
+          console.error('Failed to load CISA news', e);
         }
 
         // Fallbacks to prevent UI from breaking if API/Backend fails
