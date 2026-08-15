@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { Hero } from '../components/sections/Hero';
 import { Services } from '../components/sections/Services';
 import { Blog } from '../components/sections/Blog';
-import { WhyUs } from '../components/sections/WhyUs';
 
 
 import { CaseStudiesSlider } from '../components/sections/CaseStudiesSlider';
@@ -64,7 +63,6 @@ export const Home = () => {
       {/* Whitish Golden Theme Sections */}
       <div className="relative bg-transparent">
         <div className="relative z-10">
-          <WhyUs />
           <CaseStudiesSlider />
           <div ref={contactRef}>
             <Contact />

@@ -44,7 +44,7 @@ export const Blog = () => {
   }, []);
 
   return (
-    <section id="blog" className="py-24 relative z-10 bg-transparent">
+    <section id="blog" className="pt-12 pb-24 relative z-10 bg-transparent">
       {/* Background Image */}
       <div 
         className="absolute inset-0 z-0 opacity-100"
