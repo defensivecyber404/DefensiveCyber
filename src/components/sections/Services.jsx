@@ -209,7 +209,7 @@ export const Services = () => {
           </div>
         )}
 
-        <div className="mt-24 text-center max-w-3xl mx-auto relative z-20">
+        <div id="why-us" className="mt-24 text-center max-w-3xl mx-auto relative z-20 scroll-mt-24">
           <h2 className="text-3xl md:text-5xl font-extrabold font-sans tracking-tight mb-6 text-white">
             <span className="glossy-neon-white pb-1">Why</span> <span className="glossy-neon-purple pb-1">Us</span>
           </h2>
