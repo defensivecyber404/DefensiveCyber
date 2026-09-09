@@ -28,7 +28,7 @@ app.use(morgan('dev'));
 // CORS
 app.use(cors());
 // Body parser
-app.use(express.json({ limit: '10kb' })); // Limit body size for security
+app.use(express.json({ limit: '50mb' })); // Increased limit to allow rich text blog posts
 
 // Global Rate limiting
 const limiter = rateLimit({
@@ -40,6 +40,8 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+const uploadRoutes = require('./routes/upload');
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postsRoutes);
@@ -50,6 +52,16 @@ app.use('/api/reviews', reviewsRoutes);
 app.use('/api/clients', clientsRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/company-info', companyInfoRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Serve uploads folder statically
+// We allow Cross-Origin-Resource-Policy so frontend can read it
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  setHeaders: (res, path, stat) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
+}));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

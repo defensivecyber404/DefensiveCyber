@@ -20,10 +20,12 @@
     "express-rate-limit": "^8.6.0",
     "framer-motion": "^12.41.0",
     "helmet": "^8.3.0",
+    "jodit-react": "^5.5.3",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.21.0",
     "mongoose": "^9.8.0",
     "morgan": "^1.11.0",
+    "multer": "^2.3.0",
     "nodemailer": "^9.0.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
@@ -36,6 +38,7 @@
     "autoprefixer": "^10.5.0",
     "oxlint": "^1.69.0",
     "postcss": "^8.5.15",
+    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.19",
     "vite": "^8.1.0"
   }

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPost, updatePost } from '../../utils/blogStore';
 import { useAuth } from '../../contexts/AuthContext';
+import JoditEditor from 'jodit-react';
 
 export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess }) => {
   const { token } = useAuth();
   const isEditing = !!initialData;
+  const editor = useRef(null);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -49,10 +51,43 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
     };
   }, [isOpen]);
 
+  const config = useMemo(() => ({
+    readonly: false, 
+    placeholder: 'Write your full post content here...',
+    uploader: {
+      url: '/api/upload',
+      format: 'json',
+      method: 'POST',
+      error: function(e) {
+        console.log("Upload error", e);
+      }
+    },
+    image: {
+      editSrc: false,
+      editTitle: true,
+      editAlt: true,
+      editLink: true,
+      editSize: true,
+      editBorderRadius: true,
+      editMargins: true,
+      editAlign: true,
+      editClass: true,
+      editStyle: true,
+    },
+    height: 400
+  }), []);
+
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleEditorChange = (newContent) => {
+    setFormData(prev => ({
+      ...prev,
+      content: newContent
     }));
   };
 
@@ -146,15 +181,16 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Content</label>
-                <textarea 
-                  name="content" 
-                  rows="10"
-                  required
-                  value={formData.content} 
-                  onChange={handleChange}
-                  placeholder="Write your full post content here..."
-                  className="w-full bg-gray-50 dark:bg-gray-950 border border-gray-300 dark:border-gray-800 shadow-sm rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none"
-                ></textarea>
+                <div className="bg-white dark:bg-gray-950 text-gray-900 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-800">
+                  <JoditEditor
+                    ref={editor}
+                    value={formData.content}
+                    config={config}
+                    tabIndex={1} // tabIndex of textarea
+                    onBlur={newContent => handleEditorChange(newContent)}
+                    onChange={newContent => {}} // Preferred to use onBlur for performance reasons, but we can do both if needed
+                  />
+                </div>
               </div>
             </form>
           </div>

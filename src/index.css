@@ -17,7 +17,8 @@
   body {
     @apply antialiased font-sans overflow-x-hidden;
     background-color: #000000;
-    background-image: none; /* Removed gradient to ensure pure black */
+    background-image: none;
+    /* Removed gradient to ensure pure black */
     background-attachment: fixed;
     color: var(--text-base);
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -363,3 +364,22 @@
   -webkit-text-fill-color: transparent;
   animation: shimmer 3s linear infinite;
 }
+/* -- Custom Prose Styles for Blog HTML Content -- */
+.prose p {
+  @apply mb-6 leading-relaxed;
+}
+.prose img {
+  @apply rounded-xl shadow-lg my-8 max-w-full h-auto mx-auto border border-white/10;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply font-bold text-white mb-4 mt-8 font-space;
+}
+.prose h1 { @apply text-3xl; }
+.prose h2 { @apply text-2xl; }
+.prose h3 { @apply text-xl; }
+.prose ul { @apply list-disc list-inside mb-6 space-y-2; }
+.prose ol { @apply list-decimal list-inside mb-6 space-y-2; }
+.prose a { @apply text-primary hover:text-primary-dark underline; }
+.prose blockquote { @apply border-l-4 border-primary pl-4 italic text-gray-300 my-6; }
+.prose strong { @apply text-white font-bold; }
+

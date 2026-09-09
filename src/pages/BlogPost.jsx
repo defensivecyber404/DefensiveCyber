@@ -52,7 +52,7 @@ export const BlogPost = () => {
           Back
         </button>
 
-        <div className="max-w-3xl mx-auto mt-16">
+        <div className="max-w-5xl mx-auto mt-16">
           
 
 
@@ -89,12 +89,10 @@ export const BlogPost = () => {
               {post.title}
             </h1>
 
-            <div className="prose prose-lg prose-invert max-w-none text-gray-200 leading-relaxed drop-shadow-sm">
-              {/* Splitting content by newlines to render paragraphs */}
-              {(post.content || post.excerpt || '').split('\n').map((paragraph, idx) => (
-                <p key={idx} className="mb-6 break-words whitespace-pre-wrap">{paragraph}</p>
-              ))}
-            </div>
+            <div 
+              className="prose prose-lg prose-invert max-w-none text-gray-200 leading-relaxed drop-shadow-sm"
+              dangerouslySetInnerHTML={{ __html: post.content || post.excerpt || '' }}
+            />
           </motion.div>
           
         </div>
