@@ -69,8 +69,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Only start the server if not running in a serverless environment (like Vercel)
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+// Start the server if not running in a serverless environment (like Vercel)
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Backend server running on port ${PORT}`);
   });
