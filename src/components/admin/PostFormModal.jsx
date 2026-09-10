@@ -55,7 +55,7 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
     readonly: false, 
     placeholder: 'Write your full post content here...',
     uploader: {
-      url: '/api/upload',
+      url: `${import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '/api'}/upload`,
       format: 'json',
       method: 'POST',
       error: function(e) {
