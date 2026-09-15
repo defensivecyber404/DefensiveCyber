@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Shield, CheckCircle, Lock, Cpu, Globe, FileText, AlertTriangle, Scale, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -80,15 +80,15 @@ export const PrivacyTermsPage = () => {
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#c77dff]/10 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10 max-w-5xl">
+      <div className="container mx-auto px-4 md:px-8 relative z-[70] max-w-5xl">
         <div className="mb-12">
-          <button 
-            onClick={() => navigate(-1)}
-            className="relative z-[60] group flex items-center justify-center text-sm font-bold text-white hover:text-primary transition-all backdrop-blur-md bg-white/5 border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/10 px-6 py-2.5 rounded-full w-max cursor-pointer"
+          <a 
+            href="/"
+            className="relative z-[70] group flex items-center justify-center text-sm font-bold text-white hover:text-primary transition-all backdrop-blur-md bg-white/5 border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/10 px-6 py-2.5 rounded-full w-max cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back
-          </button>
+          </a>
         </div>
 
         <div className="text-center mb-16">
