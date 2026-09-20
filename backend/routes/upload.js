@@ -35,7 +35,7 @@ router.post('/', upload.any(), (req, res) => {
     const fileNames = uploadedFiles.map(f => f.filename);
     const isImages = uploadedFiles.map(f => f.mimetype.startsWith('image/'));
 
-    const fullBaseUrl = `${req.protocol}://${req.get('host')}/uploads/`;
+    const fullBaseUrl = `/uploads/`;
 
     res.json({
       success: true,
