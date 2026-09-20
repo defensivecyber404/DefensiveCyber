@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/uploads/(.*)",
+      "destination": "https://api.defensivecyber.com/uploads/$1"
+    },
+    {
       "source": "/api/(.*)",
       "destination": "/api/index.js"
     },
