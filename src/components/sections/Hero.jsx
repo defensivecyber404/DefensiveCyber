@@ -11,6 +11,33 @@ const typingWords = [
   'Cloud Security',
 ];
 
+const floatingCards = [
+  {
+    id: 1,
+    Icon: Shield,
+    iconClass: "text-primary drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]",
+    title: "System Secure",
+    yAnim: [0, -20, 0],
+    duration: 4,
+    delay: 0,
+    positionClass: "top-10 left-10",
+    barClass: "bg-primary/20",
+    fillClass: "bg-primary w-3/4 animate-pulse"
+  },
+  {
+    id: 2,
+    Icon: Lock,
+    iconClass: "text-accent drop-shadow-[0_0_8px_rgba(255,215,0,0.8)]",
+    title: "Encryption Active",
+    yAnim: [0, 20, 0],
+    duration: 5,
+    delay: 1,
+    positionClass: "bottom-10 right-10",
+    barClass: "bg-accent/20",
+    fillClass: "bg-accent w-full"
+  }
+];
+
 export const Hero = () => {
   // High-performance lag-free Custom Cursor State
   const [isHovering, setIsHovering] = useState(false);
@@ -161,29 +188,20 @@ export const Hero = () => {
             transition={{ duration: 1 }}
             className="relative hidden lg:block h-[500px]"
           >
-            <motion.div
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-10 left-10 p-6 rounded-2xl backdrop-blur-md border border-white/20 bg-transparent shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
-            >
-              <Shield className="w-16 h-16 text-primary mb-4 drop-shadow-[0_0_8px_rgba(212,175,55,0.8)]" />
-              <div className="h-2 w-24 bg-primary/20 rounded mb-2 overflow-hidden backdrop-blur-sm">
-                <div className="h-full w-3/4 bg-primary rounded animate-pulse" />
-              </div>
-              <div className="text-xs text-white font-mono font-bold tracking-wider drop-shadow-md">System Secure</div>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 20, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute bottom-10 right-10 p-6 rounded-2xl backdrop-blur-md border border-white/20 bg-transparent shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
-            >
-              <Lock className="w-16 h-16 text-accent mb-4 drop-shadow-[0_0_8px_rgba(255,215,0,0.8)]" />
-              <div className="h-2 w-24 bg-accent/20 rounded mb-2 overflow-hidden backdrop-blur-sm">
-                <div className="h-full w-full bg-accent rounded" />
-              </div>
-              <div className="text-xs text-white font-mono font-bold tracking-wider drop-shadow-md">Encryption Active</div>
-            </motion.div>
+            {floatingCards.map((card) => (
+              <motion.div
+                key={card.id}
+                animate={{ y: card.yAnim }}
+                transition={{ duration: card.duration, repeat: Infinity, ease: 'easeInOut', delay: card.delay }}
+                className={`absolute ${card.positionClass} p-6 rounded-2xl backdrop-blur-md border border-white/20 bg-transparent shadow-[0_4px_30px_rgba(0,0,0,0.1)]`}
+              >
+                <card.Icon className={`w-16 h-16 mb-4 ${card.iconClass}`} />
+                <div className={`h-2 w-24 ${card.barClass} rounded mb-2 overflow-hidden backdrop-blur-sm`}>
+                  <div className={`h-full rounded ${card.fillClass}`} />
+                </div>
+                <div className="text-xs text-white font-mono font-bold tracking-wider drop-shadow-md">{card.title}</div>
+              </motion.div>
+            ))}
 
             <motion.div
               animate={{ y: [0, -15, 0] }}

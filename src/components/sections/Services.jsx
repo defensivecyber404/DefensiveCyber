@@ -7,6 +7,27 @@ import { useAuth } from '../../contexts/AuthContext';
 import { ServiceFormModal } from '../admin/ServiceFormModal';
 import { WhyUsStats } from './WhyUs';
 
+const certifications = [
+  {
+    href: "https://www.credly.com/earner/earned/badge/f2de7353-342a-4e6f-88ea-c674116837f0",
+    img: "/GIACCertificationForensicAnalyst.png",
+    title: "Forensic Analyst",
+    desc: "Expertise in uncovering digital evidence, analyzing cyber incidents, and preserving data integrity for investigations."
+  },
+  {
+    href: "https://www.credly.com/earner/earned/badge/1671a9b8-676e-4887-89e6-d35c73e747a8",
+    img: "/GIACCertificationIncidentHandler.png",
+    title: "Incident Handler",
+    desc: "Proven ability to rapidly detect, contain, and recover from cyber incidents while minimizing business disruption."
+  },
+  {
+    href: "https://www.credly.com/earner/earned/badge/75006c8b-08f2-4ef4-bc1c-74b1676c85f2",
+    img: "/GIACCertificationThreatIntelligence.png",
+    title: "Threat Intelligence",
+    desc: "Proactive identification of emerging cyber threats and delivery of actionable intelligence to strengthen security posture."
+  }
+];
+
 const ServiceCard = ({ service, index, isAuthenticated, onEdit, onDelete }) => {
   const cardRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -219,68 +240,28 @@ export const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto relative z-20 mt-16">
-          {/* Card 1 */}
-          <a 
-            href="https://www.credly.com/earner/earned/badge/f2de7353-342a-4e6f-88ea-c674116837f0" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group bg-black/30 backdrop-blur-sm p-8 rounded-2xl flex flex-col items-center text-center border border-white/10 hover:border-white/20 transition-colors shadow-xl block"
-            aria-label="View GIAC Certification Forensic Analyst Credential"
-          >
-            <div className="inline-block transition-transform duration-300 group-hover:scale-110 mb-6">
-              <img 
-                src="/GIACCertificationForensicAnalyst.png" 
-                alt="GIAC Certification Forensic Analyst" 
-                className="w-32 h-32 md:w-40 md:h-40 object-contain"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Forensic Analyst</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Expertise in uncovering digital evidence, analyzing cyber incidents, and preserving data integrity for investigations.
-            </p>
-          </a>
-
-          {/* Card 2 */}
-          <a 
-            href="https://www.credly.com/earner/earned/badge/1671a9b8-676e-4887-89e6-d35c73e747a8" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group bg-black/30 backdrop-blur-sm p-8 rounded-2xl flex flex-col items-center text-center border border-white/10 hover:border-white/20 transition-colors shadow-xl block"
-            aria-label="View GIAC Certification Incident Handler Credential"
-          >
-            <div className="inline-block transition-transform duration-300 group-hover:scale-110 mb-6">
-              <img 
-                src="/GIACCertificationIncidentHandler.png" 
-                alt="GIAC Certification Incident Handler" 
-                className="w-32 h-32 md:w-40 md:h-40 object-contain"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Incident Handler</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Proven ability to rapidly detect, contain, and recover from cyber incidents while minimizing business disruption.
-            </p>
-          </a>
-
-          {/* Card 3 */}
-          <a 
-            href="https://www.credly.com/earner/earned/badge/75006c8b-08f2-4ef4-bc1c-74b1676c85f2" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group bg-black/30 backdrop-blur-sm p-8 rounded-2xl flex flex-col items-center text-center border border-white/10 hover:border-white/20 transition-colors shadow-xl block"
-            aria-label="View GIAC Certification Threat Intelligence Credential"
-          >
-            <div className="inline-block transition-transform duration-300 group-hover:scale-110 mb-6">
-              <img 
-                src="/GIACCertificationThreatIntelligence.png" 
-                alt="GIAC Certification Threat Intelligence" 
-                className="w-32 h-32 md:w-40 md:h-40 object-contain"
-              />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">Threat Intelligence</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Proactive identification of emerging cyber threats and delivery of actionable intelligence to strengthen security posture.
-            </p>
-          </a>
+          {certifications.map((cert, idx) => (
+            <a 
+              key={idx}
+              href={cert.href} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group bg-black/30 backdrop-blur-sm p-8 rounded-2xl flex flex-col items-center text-center border border-white/10 hover:border-white/20 transition-colors shadow-xl block"
+              aria-label={`View GIAC Certification ${cert.title} Credential`}
+            >
+              <div className="inline-block transition-transform duration-300 group-hover:scale-110 mb-6">
+                <img 
+                  src={cert.img} 
+                  alt={`GIAC Certification ${cert.title}`} 
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">{cert.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                {cert.desc}
+              </p>
+            </a>
+          ))}
         </div>
         
         <div className="mt-32 relative z-20">
