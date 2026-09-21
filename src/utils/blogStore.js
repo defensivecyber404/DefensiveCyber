@@ -62,7 +62,19 @@ export const fetchPosts = async () => {
   try {
     const res = await fetch(`${API_URL}/posts`);
     if (!res.ok) throw new Error('Failed to fetch posts');
-    const data = await res.json();
+    let data = await res.json();
+    
+    // Fix relative image paths for deployed environments
+    const backendBaseUrl = API_URL.replace(/\/api$/, '');
+    if (Array.isArray(data)) {
+      data = data.map(post => {
+        if (post.content) {
+          post.content = post.content.replace(/src="\/uploads\//g, `src="${backendBaseUrl}/uploads/`);
+        }
+        return post;
+      });
+    }
+
     return data.length > 0 ? data : defaultPosts;
   } catch (error) {
     console.error('Error fetching posts:', error);
@@ -137,7 +149,14 @@ export const fetchPostById = async (id) => {
   try {
     const res = await fetch(`${API_URL}/posts/${id}`);
     if (!res.ok) throw new Error('Failed to fetch post');
-    return await res.json();
+    const data = await res.json();
+    
+    if (data && data.content) {
+      const backendBaseUrl = API_URL.replace(/\/api$/, '');
+      data.content = data.content.replace(/src="\/uploads\//g, `src="${backendBaseUrl}/uploads/`);
+    }
+    
+    return data;
   } catch (error) {
     console.error('Error fetching post:', error);
     return defaultPosts.find(p => p.id === id || p._id === id) || null;
