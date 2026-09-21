@@ -37,7 +37,9 @@ router.post('/', upload.any(), (req, res) => {
 
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     const host = req.headers['x-forwarded-host'] || req.get('host');
-    const fullBaseUrl = `${protocol}://${host}/uploads/`;
+    const defaultBaseUrl = `${protocol}://${host}`;
+    const baseUrl = req.query.baseUrl || defaultBaseUrl;
+    const fullBaseUrl = `${baseUrl}/uploads/`;
 
     res.json({
       success: true,

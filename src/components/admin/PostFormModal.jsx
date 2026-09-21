@@ -51,31 +51,34 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
     };
   }, [isOpen]);
 
-  const config = useMemo(() => ({
-    readonly: false, 
-    placeholder: 'Write your full post content here...',
-    uploader: {
-      url: `${import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '/api'}/upload`,
-      format: 'json',
-      method: 'POST',
-      error: function(e) {
-        console.log("Upload error", e);
-      }
-    },
-    image: {
-      editSrc: false,
-      editTitle: true,
-      editAlt: true,
-      editLink: true,
-      editSize: true,
-      editBorderRadius: true,
-      editMargins: true,
-      editAlign: true,
-      editClass: true,
-      editStyle: true,
-    },
-    height: 400
-  }), []);
+  const config = useMemo(() => {
+    const apiBase = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '').replace(/\/api$/, '');
+    return {
+      readonly: false, 
+      placeholder: 'Write your full post content here...',
+      uploader: {
+        url: `${import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '/api'}/upload?baseUrl=${encodeURIComponent(apiBase)}`,
+        format: 'json',
+        method: 'POST',
+        error: function(e) {
+          console.log("Upload error", e);
+        }
+      },
+      image: {
+        editSrc: false,
+        editTitle: true,
+        editAlt: true,
+        editLink: true,
+        editSize: true,
+        editBorderRadius: true,
+        editMargins: true,
+        editAlign: true,
+        editClass: true,
+        editStyle: true,
+      },
+      height: 400
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -93,16 +96,19 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.title || !formData.content) return;
+    // Fallback to editor value if state hasn't updated yet (due to missing onBlur)
+    const currentContent = formData.content; 
+    if (!formData.title || !currentContent) return;
     
     setIsSubmitting(true);
     setError('');
 
     try {
+      const dataToSave = { ...formData, content: currentContent };
       if (isEditing) {
-        await updatePost(initialData._id || initialData.id, formData, token);
+        await updatePost(initialData._id || initialData.id, dataToSave, token);
       } else {
-        await createPost(formData, token);
+        await createPost(dataToSave, token);
       }
       setIsSubmitting(false);
       onSuccess();
@@ -188,7 +194,7 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
                     config={config}
                     tabIndex={1} // tabIndex of textarea
                     onBlur={newContent => handleEditorChange(newContent)}
-                    onChange={newContent => {}} // Preferred to use onBlur for performance reasons, but we can do both if needed
+                    onChange={newContent => handleEditorChange(newContent)} 
                   />
                 </div>
               </div>
