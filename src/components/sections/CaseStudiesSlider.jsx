@@ -148,6 +148,7 @@ export const CaseStudiesSlider = () => {
             <div className="hidden lg:flex absolute top-1/2 -left-6 md:-left-20 -translate-y-1/2 z-20">
               <button 
                 onClick={prevReviewSlide}
+                aria-label="Previous slide"
                 className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center shadow-md border border-white/10 hover:scale-110 hover:bg-black/90 transition-all text-white"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -156,6 +157,7 @@ export const CaseStudiesSlider = () => {
             <div className="hidden lg:flex absolute top-1/2 -right-6 md:-right-20 -translate-y-1/2 z-20">
               <button 
                 onClick={nextReviewSlide}
+                aria-label="Next slide"
                 className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center shadow-md border border-white/10 hover:scale-110 hover:bg-black/90 transition-all text-white"
               >
                 <ArrowRight className="w-5 h-5" />

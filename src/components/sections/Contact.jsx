@@ -91,7 +91,7 @@ export const Contact = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-normal text-gray-200">Service Required</label>
-                    <select name="service" defaultValue="" className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+                    <select aria-label="Select a service" name="service" defaultValue="" className="w-full bg-white/5 border border-white/10 shadow-sm rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
                       <option value="" disabled hidden className="text-gray-400">Select a service</option>
                       <option value="digital-forensics" className="text-black">Digital Forensics</option>
                       <option value="cyber-threat-intelligence" className="text-black">Cyber Threat Intelligence</option>
