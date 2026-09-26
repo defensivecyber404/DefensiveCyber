@@ -54,14 +54,7 @@ app.use('/api/services', servicesRoutes);
 app.use('/api/company-info', companyInfoRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// Serve uploads folder statically
-// We allow Cross-Origin-Resource-Policy so frontend can read it
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
-  setHeaders: (res, path, stat) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
-  }
-}));
+
 
 // Serve robots.txt
 app.get('/robots.txt', (req, res) => {
