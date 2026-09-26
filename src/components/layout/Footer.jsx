@@ -62,7 +62,7 @@ export const Footer = () => {
                 
                 <div className="flex gap-4">
                   {socialLinks.map((link, idx) => (
-                    <a key={idx} href={link.href} className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-sm flex items-center justify-center text-white/70 hover:text-primary hover:border-primary/50 transition-all">
+                    <a key={idx} href={link.href} aria-label="Social profile" className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-sm flex items-center justify-center text-white/70 hover:text-primary hover:border-primary/50 transition-all">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d={link.svg}/></svg>
                     </a>
                   ))}

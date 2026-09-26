@@ -45,8 +45,7 @@ export const Hero = () => {
   const cursorY = useMotionValue(-100);
   const springX = useSpring(cursorX, { stiffness: 800, damping: 35, mass: 0.1 });
   const springY = useSpring(cursorY, { stiffness: 800, damping: 35, mass: 0.1 });
-  const trailContainerRef = useRef(null);
-  const lastBubbleTime = useRef(0);
+
 
   const handleMouseMove = (e) => {
     // Update Framer Motion values directly to eliminate React re-render lag

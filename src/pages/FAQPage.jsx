@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FAQ } from '../components/sections/FAQ';
-import { ArrowLeft, ShieldCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+
 
 export const FAQPage = () => {
   useEffect(() => {

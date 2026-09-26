@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPostById } from '../utils/blogStore';
 import { ArrowLeft, Calendar, BookOpen, Radio } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 export const BlogPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
+
   const [post, setPost] = useState(null);
 
   useEffect(() => {

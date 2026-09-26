@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Shield, CheckCircle, Lock, Cpu, Globe, FileText, AlertTriangle, Scale, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const PrivacyTermsPage = () => {
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     window.scrollTo(0, 0);

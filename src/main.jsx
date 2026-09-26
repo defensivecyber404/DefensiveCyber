@@ -1,13 +1,21 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import App from './App'
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+
+const appContent = (
   <StrictMode>
     <HelmetProvider>
       <App />
     </HelmetProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, appContent);
+} else {
+  createRoot(rootElement).render(appContent);
+}

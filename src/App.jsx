@@ -11,7 +11,7 @@ import { FAQPage } from './pages/FAQPage';
 import { AboutPage } from './pages/AboutPage';
 import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
 import { ServiceDetailsPage } from './pages/ServiceDetailsPage';
-import { CustomCursor } from './components/ui/CustomCursor';
+
 import { AnimatedBackground } from './components/ui/AnimatedBackground';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -28,22 +28,31 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <div className="relative min-h-screen mesh-bg text-gray-800 dark:text-gray-200 font-sans selection:bg-primary/30 selection:text-gray-900 dark:selection:text-white">
-          <Navbar />
+          <header>
+            <Navbar />
+          </header>
           
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/blogs" element={<BlogPage />} />
-            <Route path="/news" element={<NewsPage />} />
-            <Route path="/secure-admin" element={<AdminBlog />} />
-            <Route path="/post/:id" element={<BlogPost />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/legal" element={<PrivacyTermsPage />} />
-            <Route path="/service/:id" element={<ServiceDetailsPage />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/blogs" element={<BlogPage />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/secure-admin" element={<AdminBlog />} />
+              <Route path="/post/:id" element={<BlogPost />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/legal" element={<PrivacyTermsPage />} />
+              <Route path="/service/:id" element={<ServiceDetailsPage />} />
+            </Routes>
+          </main>
 
-          <AnimatedBackground />
-          <Footer />
+          <div aria-hidden="true" className="pointer-events-none">
+            <AnimatedBackground />
+          </div>
+          
+          <footer>
+            <Footer />
+          </footer>
         </div>
       </BrowserRouter>
     </AuthProvider>

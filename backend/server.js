@@ -63,6 +63,33 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
+// Serve robots.txt
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *\nAllow: /\nSitemap: https://www.yourdomain.com/sitemap.xml`);
+});
+
+// Serve sitemap.xml dynamically
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const baseUrl = 'https://www.yourdomain.com';
+    const staticUrls = ['/', '/about', '/blogs', '/news', '/faq'].map(loc => ({ loc, priority: loc === '/' ? '1.0' : '0.8' }));
+    
+    // Fetch dynamic posts concisely
+    const Post = require('./models/Post');
+    const posts = await Post.find({}, '_id');
+    const dynamicUrls = posts.map(p => ({ loc: `/post/${p._id}`, priority: '0.7' }));
+
+    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+      [...staticUrls, ...dynamicUrls].map(url => `  <url><loc>${baseUrl}${url.loc}</loc><priority>${url.priority}</priority></url>\n`).join('') +
+      `</urlset>`;
+
+    res.header('Content-Type', 'application/xml').send(sitemapXml);
+  } catch (err) {
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
