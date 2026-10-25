@@ -49,7 +49,15 @@ export const Footer = () => {
           {/* Brand & Mandate */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/middle-logo-dark.png" alt="Defensive Cyber" className="h-7 w-auto opacity-90" />
+              <img 
+                src="/middle-logo-dark.webp" 
+                alt="Defensive Cyber" 
+                width="28" 
+                height="28" 
+                loading="lazy" 
+                decoding="async" 
+                className="h-7 w-auto opacity-90" 
+              />
               <span className="font-serif font-bold text-lg tracking-tight text-[var(--text-heading)]">
                 DEFENSIVE CYBER
               </span>

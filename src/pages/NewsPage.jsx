@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { fetchPosts, deletePost, fetchCisaNews } from '../utils/blogStore';
 import { useAuth } from '../contexts/AuthContext';
-import { PostFormModal } from '../components/admin/PostFormModal';
 import { ArrowLeft, ArrowRight, PlusCircle, Trash2, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+
+const PostFormModal = lazy(() => import('../components/admin/PostFormModal').then(m => ({ default: m.PostFormModal })));
 
 export const NewsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -182,13 +183,17 @@ export const NewsPage = () => {
         </div>
       </div>
 
-      <PostFormModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSuccess={loadPosts}
-        initialData={editingPost}
-        defaultType="news"
-      />
+      {isModalOpen && (
+        <Suspense fallback={null}>
+          <PostFormModal 
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSuccess={loadPosts}
+            initialData={editingPost}
+            defaultType="news"
+          />
+        </Suspense>
+      )}
     </main>
   );
 };

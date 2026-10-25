@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
-import { BlogPage } from './pages/BlogPage';
-import { NewsPage } from './pages/NewsPage';
-import { AdminBlog } from './pages/AdminBlog';
-import { BlogPost } from './pages/BlogPost';
-import { FAQPage } from './pages/FAQPage';
-import { AboutPage } from './pages/AboutPage';
-import { PrivacyTermsPage } from './pages/PrivacyTermsPage';
-import { ServiceDetailsPage } from './pages/ServiceDetailsPage';
-
 import { AnimatedBackground } from './components/ui/AnimatedBackground';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+
+// Code-split non-critical routes to optimize initial bundle size & LCP
+const BlogPage = lazy(() => import('./pages/BlogPage').then(m => ({ default: m.BlogPage })));
+const NewsPage = lazy(() => import('./pages/NewsPage').then(m => ({ default: m.NewsPage })));
+const AdminBlog = lazy(() => import('./pages/AdminBlog').then(m => ({ default: m.AdminBlog })));
+const BlogPost = lazy(() => import('./pages/BlogPost').then(m => ({ default: m.BlogPost })));
+const FAQPage = lazy(() => import('./pages/FAQPage').then(m => ({ default: m.FAQPage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const PrivacyTermsPage = lazy(() => import('./pages/PrivacyTermsPage').then(m => ({ default: m.PrivacyTermsPage })));
+const ServiceDetailsPage = lazy(() => import('./pages/ServiceDetailsPage').then(m => ({ default: m.ServiceDetailsPage })));
 
 function App() {
   // Smooth scroll behavior
@@ -42,17 +43,23 @@ function App() {
               </header>
             
               <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/blogs" element={<BlogPage />} />
-                  <Route path="/news" element={<NewsPage />} />
-                  <Route path="/secure-admin" element={<AdminBlog />} />
-                  <Route path="/post/:id" element={<BlogPost />} />
-                  <Route path="/faq" element={<FAQPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="/legal" element={<PrivacyTermsPage />} />
-                  <Route path="/service/:id" element={<ServiceDetailsPage />} />
-                </Routes>
+                <Suspense fallback={
+                  <div className="min-h-screen flex items-center justify-center bg-[var(--bg-base)]">
+                    <div className="w-6 h-6 border-2 border-[var(--text-heading)] border-t-transparent animate-spin" />
+                  </div>
+                }>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/blogs" element={<BlogPage />} />
+                    <Route path="/news" element={<NewsPage />} />
+                    <Route path="/secure-admin" element={<AdminBlog />} />
+                    <Route path="/post/:id" element={<BlogPost />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/legal" element={<PrivacyTermsPage />} />
+                    <Route path="/service/:id" element={<ServiceDetailsPage />} />
+                  </Routes>
+                </Suspense>
               </main>
 
               <footer>
@@ -60,9 +67,9 @@ function App() {
               </footer>
             </div>
           </div>
-      </BrowserRouter>
-    </ThemeProvider>
-  </AuthProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

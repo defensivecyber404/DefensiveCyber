@@ -10,19 +10,19 @@ import { WhyUsStats } from './WhyUs';
 const certifications = [
   {
     href: "https://www.credly.com/earner/earned/badge/f2de7353-342a-4e6f-88ea-c674116837f0",
-    img: "/GIACCertificationForensicAnalyst.png",
+    img: "/GIACCertificationForensicAnalyst.webp",
     title: "Certified Forensic Analyst",
     desc: "Advanced threat hunting, enterprise memory analysis, forensic timeline reconstruction, and deep adversarial dwell-time identification."
   },
   {
     href: "https://www.credly.com/earner/earned/badge/1671a9b8-676e-4887-89e6-d35c73e747a8",
-    img: "/GIACCertificationIncidentHandler.png",
+    img: "/GIACCertificationIncidentHandler.webp",
     title: "Certified Incident Handler",
     desc: "Adversarial exploit analysis, memory exploitation triage, malware containment, and post-breach operational recovery."
   },
   {
     href: "https://www.credly.com/earner/earned/badge/75006c8b-08f2-4ef4-bc1c-74b1676c85f2",
-    img: "/GIACCertificationThreatIntelligence.png",
+    img: "/GIACCertificationThreatIntelligence.webp",
     title: "Threat Intelligence Analyst",
     desc: "Strategic intelligence modeling, MITRE ATT&CK adversary mapping, zero-day threat correlation, and perimeter defense hardening."
   }
@@ -197,6 +197,10 @@ export const Services = () => {
                     <img 
                       src={cert.img} 
                       alt={`GIAC Certification ${cert.title}`} 
+                      width="112"
+                      height="112"
+                      loading="lazy"
+                      decoding="async"
                       className="w-28 h-28 object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>

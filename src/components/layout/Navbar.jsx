@@ -31,8 +31,10 @@ export const Navbar = () => {
         {/* Brand / Logo */}
         <Link to="/" className="flex items-center gap-3 group">
           <img
-            src="/middle-logo-dark.png"
+            src="/middle-logo-dark.webp"
             alt="Defensive Cyber Insignia"
+            width="32"
+            height="32"
             className="w-8 h-8 object-contain dark:invert-0 opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <div className="flex flex-col">
