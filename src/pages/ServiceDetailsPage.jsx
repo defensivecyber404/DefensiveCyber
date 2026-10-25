@@ -1,105 +1,161 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as Icons from 'lucide-react';
-import { fetchServiceById } from '../utils/blogStore';
+import { fetchServices, defaultServices } from '../utils/blogStore';
+import { Helmet } from 'react-helmet-async';
+
+const SERVICE_PARAGRAPHS = {
+  'digital-forensics': "When an incident, data breach, or unauthorized insider activity occurs, Defensive Cyber uncovers, preserves, and analyzes digital evidence across endpoints, volatile memory, cloud estates, and networks. Following strict chain-of-custody protocols, our certified senior practitioners reconstruct the complete chronological timeline of adversary activity to deliver defensible, court-admissible forensic reports that hold up under legal, regulatory, and executive scrutiny.",
+  'cyber-threat-intelligence': "Defensive Cyber proactively monitors adversary infrastructure, dark web forums, illicit marketplaces, and leaked credentials to identify threats targeting your organization before attacks occur. We translate real-world threat actor behaviors and campaigns into actionable intelligence, prioritized threat warnings, and tailored detection rules to harden your defenses in advance.",
+  'incident-response': "In the event of an active intrusion, compromised identity, or ransomware deployment, Defensive Cyber delivers rapid, senior-led emergency containment to sever adversary command links, halt lateral spread, and preserve vital evidence. We systematically eliminate backdoors and persistence mechanisms, orchestrating a safe, resilient operational recovery with minimal business downtime.",
+  'reverse-engineering-malware-analysis': "Defensive Cyber dissects suspicious binaries, compiled executables, loaders, and obfuscated payloads down to the assembly level inside isolated laboratory environments. We expose hidden capabilities, encryption routines, and command-and-control infrastructure, providing validated detection signatures (YARA/Sigma) and tactical indicators to permanently block related threat variants."
+};
 
 export const ServiceDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [service, setService] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const loadService = async () => {
-      setIsLoading(true);
-      const data = await fetchServiceById(id);
-      setService(data);
-      setIsLoading(false);
+    const loadData = async () => {
+      try {
+        const fetched = await fetchServices();
+        const list = (fetched && fetched.length > 0) ? fetched : defaultServices;
+        const found = list.find(s => s.slug === id || s._id === id);
+        setService(found || list[0]);
+      } catch (e) {
+        const found = defaultServices.find(s => s.slug === id || s._id === id);
+        setService(found || defaultServices[0]);
+      } finally {
+        setLoading(false);
+      }
     };
-    loadService();
+    loadData();
   }, [id]);
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className="pt-32 pb-24 min-h-screen flex flex-col items-center justify-center text-white">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
-        <p className="text-gray-400 font-medium tracking-wider animate-pulse">Loading service...</p>
-      </div>
+      <main className="min-h-screen flex flex-col items-center justify-center bg-[var(--bg-base)] text-[var(--text-heading)]">
+        <div className="w-8 h-8 border-2 border-[var(--text-heading)] border-t-transparent animate-spin mb-4" />
+        <p className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)]">
+          Loading Service Overview...
+        </p>
+      </main>
     );
   }
 
   if (!service) {
     return (
-      <div className="pt-32 pb-24 min-h-screen flex flex-col items-center justify-center text-white">
-        <h1 className="text-4xl font-bold mb-4">Service Not Found</h1>
-        <button onClick={() => navigate('/')} className="text-primary hover:underline font-bold">
-          Return Home
-        </button>
-      </div>
+      <main className="min-h-screen flex flex-col items-center justify-center bg-[var(--bg-base)] text-[var(--text-heading)] px-6">
+        <h2 className="font-serif text-3xl font-bold mb-4">Capability Not Found</h2>
+        <p className="font-sans text-sm text-[var(--text-muted)] mb-8">
+          The requested security service or assessment could not be located.
+        </p>
+        <Link 
+          to="/#services" 
+          className="brand-btn-primary !py-3 !px-7 font-mono text-xs uppercase tracking-wider"
+        >
+          Browse All Services
+        </Link>
+      </main>
     );
   }
 
-  // Split title for styling (last word in purple)
-  const words = service.title.split(' ');
-  const lastWord = words.pop();
-  const firstPart = words.join(' ');
-  const IconComponent = Icons[service.icon] || Icons.Search;
+  const paragraph = SERVICE_PARAGRAPHS[service.slug] || service.fullDescription || service.description;
 
   return (
-    <main className="pt-24 pb-24 relative min-h-screen bg-transparent">
-      <div className="container mx-auto px-6 relative z-10">
-        
-        <button 
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          className="relative z-[60] mt-12 mb-8 cursor-pointer inline-flex items-center text-sm font-bold text-white hover:text-primary transition-all duration-300 hover:-translate-y-1 hover:bg-white/10 backdrop-blur-sm bg-white/5 border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] px-5 py-2 rounded-full"
-        >
-          <Icons.ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </button>
+    <main className="pt-28 pb-20 relative min-h-screen bg-[var(--bg-base)] text-[var(--text-base)]">
+      <Helmet>
+        <title>{`${service.title} | Defensive Cyber Services`}</title>
+        <meta name="description" content={service.description} />
+      </Helmet>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-block p-4 rounded-2xl bg-white/5 border border-white/10 mb-6 backdrop-blur-sm"
-            >
-              <IconComponent className="w-12 h-12 text-primary drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]" />
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-2xl md:text-4xl font-black uppercase mb-6"
-              style={{ fontFamily: '"Monument Extended", "Syncopate", sans-serif' }}
-            >
-              {firstPart && <span className="glossy-neon-white pb-1 mr-3">{firstPart}</span>}
-              <span className="glossy-neon-purple pb-1">{lastWord}</span>
-            </motion.h1>
+      <div className="container mx-auto px-6 md:px-12 max-w-4xl">
+        
+        {/* Navigation Breadcrumb */}
+        <div className="flex items-center justify-between pb-6 mb-10 border-b border-[var(--border-hairline)]">
+          <button 
+            onClick={() => navigate('/#services')}
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-heading)] transition-colors cursor-pointer group"
+          >
+            <Icons.ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+            <span>Back to Services</span>
+          </button>
+          
+          <Link 
+            to="/#services"
+            className="font-mono text-xs uppercase tracking-wider text-[var(--text-heading)] hover:text-[var(--accent-signal)] transition-colors flex items-center gap-1.5 font-semibold"
+          >
+            <span>Browse All Services</span>
+            <Icons.ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Clean Central Explanation Block */}
+        <div className="pb-12 border-b border-[var(--border-hairline)] mb-12">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-1.5 bg-[var(--accent-signal)] rounded-none" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] font-medium">
+              Core Security Discipline
+            </span>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden group rounded-2xl border border-white/10 shadow-xl bg-black/30 backdrop-blur-sm"
-          >
-            {/* Subtle center purple glow */}
-            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(90,20,150,0.2) 0%, transparent 60%)' }} />
-            
-            <div className="relative z-10 p-8 md:p-12">
-              {service.fullDescription.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="mb-6 leading-relaxed text-[1.15rem] md:text-xl text-gray-200 drop-shadow-sm font-medium">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </motion.div>
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text-heading)] leading-tight mb-6">
+            {service.title}
+          </h1>
+
+          <p className="font-sans text-base sm:text-lg text-[var(--text-body)] leading-relaxed mb-8">
+            {paragraph}
+          </p>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a 
+              href="/#contact" 
+              className="brand-btn-primary flex items-center justify-center gap-3 !rounded-none !py-3 !px-7 font-mono text-xs uppercase tracking-wider font-semibold"
+            >
+              <span>Request Scope Docket</span>
+              <Icons.ArrowRight className="w-4 h-4" />
+            </a>
+            <Link 
+              to="/#services" 
+              className="brand-btn-secondary flex items-center justify-center gap-2 !rounded-none !py-3 !px-7 font-mono text-xs uppercase tracking-wider"
+            >
+              Browse All Services
+            </Link>
+          </div>
         </div>
+
+        {/* Bottom CTA Box (Kept as requested) */}
+        <div className="border border-[var(--border-hairline)] bg-[var(--bg-card)] p-8 sm:p-12 text-center rounded-none shadow-sm">
+          <span className="font-mono text-xs uppercase tracking-widest text-[var(--text-muted)] block mb-3 font-semibold">
+            SECURE YOUR ASSESSMENT WINDOW
+          </span>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--text-heading)] max-w-xl mx-auto mb-4">
+            Ready to initiate a {service.title} engagement?
+          </h2>
+          <p className="font-sans text-sm text-[var(--text-body)] max-w-lg mx-auto leading-relaxed mb-8">
+            Speak directly with our senior certified practitioners. Receive a customized scoping docket with transparent timelines and zero automated filler.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a 
+              href="/#contact"
+              className="brand-btn-primary inline-flex items-center justify-center gap-3 !rounded-none !py-3.5 !px-8 font-mono text-xs uppercase tracking-wider font-semibold"
+            >
+              <span>Request Confidential Scoping Call</span>
+              <Icons.ArrowRight className="w-4 h-4" />
+            </a>
+            <Link 
+              to="/#services"
+              className="brand-btn-secondary inline-flex items-center justify-center gap-2 !rounded-none !py-3.5 !px-8 font-mono text-xs uppercase tracking-wider"
+            >
+              <span>Browse All Services</span>
+            </Link>
+          </div>
+        </div>
+
       </div>
     </main>
   );
