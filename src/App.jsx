@@ -18,13 +18,6 @@ const PrivacyTermsPage = lazy(() => import('./pages/PrivacyTermsPage').then(m =>
 const ServiceDetailsPage = lazy(() => import('./pages/ServiceDetailsPage').then(m => ({ default: m.ServiceDetailsPage })));
 
 function App() {
-  // Smooth scroll behavior
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
 
   return (
     <AuthProvider>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import * as Icons from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { fetchServices, defaultServices } from '../utils/blogStore';
 import { Helmet } from 'react-helmet-async';
 
@@ -80,7 +80,7 @@ export const ServiceDetailsPage = () => {
             onClick={() => navigate('/#services')}
             className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] hover:text-[var(--text-heading)] transition-colors cursor-pointer group"
           >
-            <Icons.ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             <span>Back to Services</span>
           </button>
           
@@ -89,7 +89,7 @@ export const ServiceDetailsPage = () => {
             className="font-mono text-xs uppercase tracking-wider text-[var(--text-heading)] hover:text-[var(--accent-signal)] transition-colors flex items-center gap-1.5 font-semibold"
           >
             <span>Browse All Services</span>
-            <Icons.ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -117,7 +117,7 @@ export const ServiceDetailsPage = () => {
               className="brand-btn-primary flex items-center justify-center gap-3 !rounded-none !py-3 !px-7 font-mono text-xs uppercase tracking-wider font-semibold"
             >
               <span>Request Scope Docket</span>
-              <Icons.ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4" />
             </a>
             <Link 
               to="/#services" 
@@ -145,7 +145,7 @@ export const ServiceDetailsPage = () => {
               className="brand-btn-primary inline-flex items-center justify-center gap-3 !rounded-none !py-3.5 !px-8 font-mono text-xs uppercase tracking-wider font-semibold"
             >
               <span>Request Confidential Scoping Call</span>
-              <Icons.ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4" />
             </a>
             <Link 
               to="/#services"

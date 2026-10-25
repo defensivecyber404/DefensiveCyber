@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPost, updatePost } from '../../utils/blogStore';
 import { useAuth } from '../../contexts/AuthContext';
-import JoditEditor from 'jodit-react';
+
+const JoditEditor = lazy(() => import('jodit-react'));
 
 export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess }) => {
   const { token } = useAuth();
@@ -187,15 +188,17 @@ export const PostFormModal = ({ isOpen, onClose, initialData, type, onSuccess })
 
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 mb-2">Full Content</label>
-                <div className="bg-[#070611] text-gray-200 rounded-none overflow-hidden border border-purple-500/20">
-                  <JoditEditor
-                    ref={editor}
-                    value={formData.content}
-                    config={config}
-                    tabIndex={1}
-                    onBlur={newContent => handleEditorChange(newContent)}
-                    onChange={newContent => handleEditorChange(newContent)} 
-                  />
+                <div className="bg-[#070611] text-gray-200 rounded-none overflow-hidden border border-purple-500/20 min-h-[200px]">
+                  <Suspense fallback={<div className="p-8 text-center text-xs font-mono text-gray-400">Loading Rich Text Editor...</div>}>
+                    <JoditEditor
+                      ref={editor}
+                      value={formData.content}
+                      config={config}
+                      tabIndex={1}
+                      onBlur={newContent => handleEditorChange(newContent)}
+                      onChange={newContent => handleEditorChange(newContent)} 
+                    />
+                  </Suspense>
                 </div>
               </div>
             </form>

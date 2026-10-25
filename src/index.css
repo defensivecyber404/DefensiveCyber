@@ -65,6 +65,16 @@
     --bottom-left-ambient: radial-gradient(circle 900px at 0% 100%, rgba(147, 51, 234, 0.22) 0%, rgba(126, 34, 206, 0.07) 45%, transparent 70%);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     @apply antialiased overflow-x-hidden;
     font-family: 'Roboto Flex', -apple-system, BlinkMacSystemFont, sans-serif;

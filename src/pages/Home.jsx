@@ -16,14 +16,18 @@ export const Home = () => {
 
   useEffect(() => {
     if (location.hash) {
-      setTimeout(() => {
-        const element = document.getElementById(location.hash.substring(1));
+      const id = location.hash.substring(1);
+      const timer = setTimeout(() => {
+        const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       }, 100);
+      return () => clearTimeout(timer);
     } else {
-      window.scrollTo(0, 0);
+      if (window.scrollY > 0) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
     }
   }, [location]);
 

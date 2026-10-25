@@ -1,11 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import * as Icons from 'lucide-react';
+import { 
+  Search, 
+  Radar, 
+  AlertTriangle, 
+  Bug, 
+  Shield, 
+  Activity, 
+  Lock, 
+  Key, 
+  Eye, 
+  Server, 
+  Code, 
+  Terminal,
+  Plus, 
+  ArrowRight, 
+  Edit, 
+  Trash2, 
+  ExternalLink 
+} from 'lucide-react';
 import { fetchServices, deleteService, defaultServices } from '../../utils/blogStore';
 import { useAuth } from '../../contexts/AuthContext';
 import { ServiceFormModal } from '../admin/ServiceFormModal';
 import { WhyUsStats } from './WhyUs';
+
+const iconMap = {
+  Search,
+  Radar,
+  AlertTriangle,
+  Bug,
+  Shield,
+  Activity,
+  Lock,
+  Key,
+  Eye,
+  Server,
+  Code,
+  Terminal
+};
 
 const certifications = [
   {
@@ -77,7 +110,7 @@ export const Services = () => {
                 onClick={() => { setEditingService(null); setIsModalOpen(true); }}
                 className="brand-btn-primary !py-2.5 !px-5 text-xs flex items-center gap-2"
               >
-                <Icons.Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3.5 h-3.5" />
                 Add Practice Area
               </button>
             )}
@@ -87,7 +120,7 @@ export const Services = () => {
         {/* Architectural Services Directory (Clean Hairline Rows, No Bento Boxes) */}
         <div className="divide-y divide-[var(--border-hairline)] border-t border-b border-[var(--border-hairline)]">
           {services.map((service, index) => {
-            const IconComponent = Icons[service.icon] || Icons.Shield;
+            const IconComponent = iconMap[service.icon] || Shield;
             const numberFormatted = String(index + 1).padStart(2, '0');
 
             return (
@@ -129,7 +162,7 @@ export const Services = () => {
                       className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-heading)] inline-flex items-center gap-1.5 group-hover:translate-x-1 transition-transform"
                     >
                       <span>Explore</span>
-                      <Icons.ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
 
                     {isAuthenticated && (
@@ -139,14 +172,14 @@ export const Services = () => {
                           className="p-1.5 border border-[var(--border-hairline)] hover:bg-[var(--text-heading)] hover:text-[var(--bg-base)] text-[var(--text-heading)] rounded-none transition-colors"
                           title="Edit Service"
                         >
-                          <Icons.Edit className="w-3.5 h-3.5" />
+                          <Edit className="w-3.5 h-3.5" />
                         </button>
                         <button 
                           onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(service._id); }}
                           className="p-1.5 border border-red-500/30 text-red-600 hover:bg-red-600 hover:text-white rounded-none transition-colors"
                           title="Delete Service"
                         >
-                          <Icons.Trash2 className="w-3.5 h-3.5" />
+                          <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     )}
@@ -190,7 +223,7 @@ export const Services = () => {
               >
                 <div>
                   <div className="flex justify-end items-start mb-6">
-                    <Icons.ExternalLink className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-heading)] transition-colors" />
+                    <ExternalLink className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-heading)] transition-colors" />
                   </div>
 
                   <div className="flex justify-center mb-8">

@@ -28,8 +28,19 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('jodit-react') || id.includes('jodit')) {
-              return 'vendor-editor';
+            // Never put jodit in initial/manual vendor chunks so it stays strictly dynamic
+            if (id.includes('jodit')) {
+              return undefined;
+            }
+            if (
+              id.includes('/react/') || 
+              id.includes('/react-dom/') || 
+              id.includes('/scheduler/') ||
+              id.includes('\\react\\') || 
+              id.includes('\\react-dom\\') || 
+              id.includes('\\scheduler\\')
+            ) {
+              return 'vendor-react';
             }
             if (id.includes('framer-motion')) {
               return 'vendor-motion';
@@ -37,11 +48,8 @@ export default defineConfig({
             if (id.includes('lucide-react')) {
               return 'vendor-icons';
             }
-            if (id.includes('react-router-dom') || id.includes('react-helmet-async')) {
+            if (id.includes('react-router') || id.includes('react-helmet')) {
               return 'vendor-router';
-            }
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
             }
           }
         }

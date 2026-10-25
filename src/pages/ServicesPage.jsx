@@ -2,10 +2,42 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import * as Icons from 'lucide-react';
+import { 
+  Search, 
+  Radar, 
+  AlertTriangle, 
+  Bug, 
+  Shield, 
+  Activity, 
+  Lock, 
+  Key, 
+  Eye, 
+  Server, 
+  Code, 
+  Terminal,
+  ArrowLeft,
+  Plus,
+  Edit,
+  Trash2
+} from 'lucide-react';
 import { fetchServices, deleteService, defaultServices } from '../utils/blogStore';
 import { useAuth } from '../contexts/AuthContext';
 import { ServiceFormModal } from '../components/admin/ServiceFormModal';
+
+const iconMap = {
+  Search,
+  Radar,
+  AlertTriangle,
+  Bug,
+  Shield,
+  Activity,
+  Lock,
+  Key,
+  Eye,
+  Server,
+  Code,
+  Terminal
+};
 
 const ServiceCard = ({ service, index, isAuthenticated, onEdit, onDelete }) => {
   const cardRef = useRef(null);
@@ -30,7 +62,7 @@ const ServiceCard = ({ service, index, isAuthenticated, onEdit, onDelete }) => {
     });
   };
 
-  const IconComponent = Icons[service.icon] || Icons.Search;
+  const IconComponent = iconMap[service.icon] || Search;
 
   return (
     <motion.div
@@ -81,13 +113,13 @@ const ServiceCard = ({ service, index, isAuthenticated, onEdit, onDelete }) => {
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); onEdit(service); }}
             className="p-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md transition-colors"
           >
-            <Icons.Edit className="w-4 h-4" />
+            <Edit className="w-4 h-4" />
           </button>
           <button 
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); onDelete(service._id); }}
             className="p-2 bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-white rounded-full backdrop-blur-md transition-colors"
           >
-            <Icons.Trash2 className="w-4 h-4" />
+            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -140,7 +172,7 @@ export const ServicesPage = () => {
           }}
           className="group inline-flex items-center text-xs font-mono uppercase tracking-wider font-bold text-white hover:text-purple-300 transition-all backdrop-blur-md bg-[#0E0C1F] border border-purple-500/25 hover:border-purple-400 hover:bg-purple-600/20 px-5 py-2.5 rounded-none cursor-pointer mt-8 mb-4"
         >
-          <Icons.ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
           Back
         </button>
         <div className="text-center max-w-3xl mx-auto mb-16 pt-4">
@@ -165,7 +197,7 @@ export const ServicesPage = () => {
               onClick={() => { setEditingService(null); setIsModalOpen(true); }}
               className="mt-4 px-6 py-2.5 rounded-none cyber-button-solid text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2 mx-auto"
             >
-              <Icons.Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4" />
               Add Service
             </button>
           )}
