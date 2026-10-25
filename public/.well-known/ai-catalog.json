@@ -1,0 +1,38 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Defensive Cyber",
+    "documentationUrl": "https://defensive-cyber.com/llms.txt",
+    "logoUrl": "https://defensive-cyber.com/middle-logo-dark.png"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:defensivecyber:security:services",
+      "displayName": "Defensive Cyber Security Capabilities",
+      "type": "application/json",
+      "url": "https://defensive-cyber.com/llms.txt",
+      "description": "Principal-led cybersecurity assessments, digital forensics, incident response, reverse engineering, and verified penetration testing audits.",
+      "tags": [
+        "cybersecurity",
+        "penetration-testing",
+        "digital-forensics",
+        "threat-intelligence",
+        "incident-response",
+        "malware-analysis"
+      ],
+      "capabilities": [
+        "PenetrationTesting",
+        "DigitalForensics",
+        "ThreatIntelligence",
+        "IncidentResponse",
+        "MalwareAnalysis"
+      ],
+      "representativeQueries": [
+        "Defensive Cyber security services and capabilities",
+        "Enterprise digital forensics and incident response",
+        "Principal led penetration testing and vulnerability assessment"
+      ],
+      "version": "1.0.0"
+    }
+  ]
+}

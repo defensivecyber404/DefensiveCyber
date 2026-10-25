@@ -1,9 +1,17 @@
 # Defensive Cyber
 
-> Defensive Cyber is an elite cybersecurity firm offering state-of-the-art protection, penetration testing, and security consulting.
+> Defensive Cyber is a premier technical cybersecurity firm delivering principal-led penetration testing, digital forensics, cyber threat intelligence, incident response, and low-level reverse engineering.
 
-## Links
-- [Home](https://defensivecyber.com)
-- [Services](https://defensivecyber.com/#services)
-- [About Us](https://defensivecyber.com/about)
-- [Contact](https://defensivecyber.com/#contact)
+## Capabilities & Services
+- [Digital Forensics](https://defensive-cyber.com/service/digital-forensics): Live memory analysis, filesystem artifacts, and court-admissible forensic reporting.
+- [Cyber Threat Intelligence](https://defensive-cyber.com/service/cyber-threat-intelligence): Proactive dark web surveillance, actor profiling, and detection engineering.
+- [Incident Response](https://defensive-cyber.com/service/incident-response): 24/7 rapid containment, adversary eradication, and resilient operational recovery.
+- [Reverse Engineering & Malware Analysis](https://defensive-cyber.com/service/reverse-engineering-malware-analysis): Binary disassembly, payload unpacking, and C2 disruption.
+
+## Core Navigation
+- [Home](https://defensive-cyber.com/)
+- [Practice Areas](https://defensive-cyber.com/#services)
+- [Firm Credentials & Certifications](https://defensive-cyber.com/#why-us)
+- [Technical FAQ](https://defensive-cyber.com/faq)
+- [About Us](https://defensive-cyber.com/about)
+- [Contact & Scoping Desk](https://defensive-cyber.com/#contact)
