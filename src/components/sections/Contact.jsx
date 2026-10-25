@@ -59,48 +59,47 @@ export const Contact = () => {
                 
                 <div className="space-y-2">
                   <label className="block font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-medium">
-                    Principal Contact
+                    Name
                   </label>
                   <input 
                     type="text" 
                     name="name"
                     required
                     className="w-full border border-[var(--border-hairline)] bg-[var(--bg-base)] rounded-none px-4 py-3 text-[var(--text-heading)] placeholder:text-[var(--text-muted)] text-sm focus:outline-none focus:border-[var(--text-heading)] transition-colors"
-                    placeholder="e.g. Eleanor Vance"
+                    placeholder="Name"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-medium">
-                    Corporate Email
+                    Email Address
                   </label>
                   <input 
                     type="email" 
                     name="email"
                     required
                     className="w-full border border-[var(--border-hairline)] bg-[var(--bg-base)] rounded-none px-4 py-3 text-[var(--text-heading)] placeholder:text-[var(--text-muted)] text-sm focus:outline-none focus:border-[var(--text-heading)] transition-colors"
-                    placeholder="security@organization.com"
+                    placeholder="Email Address"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-medium">
-                    Assessment Discipline
+                    Which service do you need?
                   </label>
                   <select 
-                    aria-label="Select an assessment discipline" 
+                    aria-label="Which service do you need?" 
                     name="service" 
                     defaultValue="" 
                     required
                     className="w-full border border-[var(--border-hairline)] bg-[var(--bg-base)] rounded-none px-4 py-3 text-[var(--text-heading)] text-sm focus:outline-none focus:border-[var(--text-heading)] transition-colors"
                   >
-                    <option value="" disabled hidden>Select discipline...</option>
-                    <option value="penetration-testing">Web Application & API VAPT</option>
-                    <option value="cloud-security">Cloud Infrastructure Audit</option>
-                    <option value="digital-forensics">Digital Forensics & Evidence</option>
-                    <option value="incident-response">Incident Containment & Response</option>
-                    <option value="red-teaming">Adversary Emulation (Red Team)</option>
-                    <option value="other">Bespoke Security Architecture</option>
+                    <option value="" disabled hidden>Select service...</option>
+                    <option value="digital-forensics">Digital Forensics</option>
+                    <option value="cyber-threat-intelligence">Cyber Threat Intelligence</option>
+                    <option value="incident-response">Incident Response</option>
+                    <option value="reverse-engineering-malware-analysis">Reverse Engineering &amp; Malware Analysis</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
 
@@ -108,14 +107,14 @@ export const Contact = () => {
 
               <div className="space-y-2">
                 <label className="block font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-medium">
-                  Scope Overview & Target Environment
+                  Have a query or need another service? Drop your message here
                 </label>
                 <textarea 
                   name="message"
                   required
                   rows={4}
                   className="w-full border border-[var(--border-hairline)] bg-[var(--bg-base)] rounded-none px-4 py-3 text-[var(--text-heading)] placeholder:text-[var(--text-muted)] text-sm focus:outline-none focus:border-[var(--text-heading)] transition-colors resize-none"
-                  placeholder="Outline your target domains, IP ranges, active compliance requirements (SOC 2, ISO 27001), or timeline constraints..."
+                  placeholder="Drop your message, questions, or specific project requirements here..."
                 />
               </div>
 
